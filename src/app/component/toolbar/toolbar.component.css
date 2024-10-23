@@ -1,0 +1,41 @@
+.example-container {
+    width: 200px;
+    height: 100%;
+    border: 1px solid #ffa528;
+  }
+.sidebar {
+background-color: #ffa528;
+
+.example-button-row {
+    display: table-caption;
+    max-width: 600px;
+    margin-right: 1px;
+    margin-left: 1px;
+    margin-top: 10px;
+  }
+.boton {
+    margin-top: 10px;
+    margin-left: 25px;
+    margin-bottom: 10px;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    width: 150px;
+    
+}
+.botonCerrarSesion {
+    margin-top: 100%;
+    margin-left: 25px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    width: 150px;
+}
+.logo {
+  width: 150px;
+  height: 50px;
+  margin-left: 25px;
+  margin-top: 10px;
+}
+
+}
+  

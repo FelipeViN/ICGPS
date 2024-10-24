@@ -1,0 +1,97 @@
+/* Layout principal */
+.main-layout {
+  display: flex;
+  height: 100vh; /* Ocupa todo el alto de la pantalla */
+  background-color: #f5f5f5;
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 200px;
+  background-color: #ffa528;
+  padding: 20px;
+  position: fixed;
+  height: 100%; /* Ocupa todo el alto de la pantalla */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+/* Contenedor Principal */
+.container {
+  margin-left: 220px; /* Ajuste para que no se solape con la barra lateral */
+  padding-top: 20px;
+  display: flex;
+  height: 100%;
+  align-items: flex-start;
+}
+
+/* Estructura de las columnas y filas */
+.main-row {
+  display: flex;
+  width: 100%;
+  gap: 20px; /* Espacio entre las dos columnas */
+}
+
+/* Columna izquierda (Información General) */
+.col-general {
+  flex: 0 0 30%; /* Ocupa el 33% del ancho */
+}
+
+/* Columna derecha (contiene dos filas) */
+.col-info {
+  flex: 0 0 70%; /* Ocupa el 66% del ancho */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espacio entre las dos filas */
+}
+
+/* Tarjetas */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 100%;
+}
+
+/* Encabezado de las tarjetas */
+.card-header {
+  background-color: #f0f0f8;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  font-size: 1.2rem;
+}
+
+/* Imagen de perfil */
+.profile-img {
+  border-radius: 50%;
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+/* General settings for the grid */
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+/* Styling similar to the provided palette */
+body {
+  background-color: #e6e6e6;
+}
+
+.footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #e6e6e6;
+}

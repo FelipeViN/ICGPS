@@ -1,86 +1,76 @@
-.example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
+.tarjetaPrincipal {
+ 
+ 
+  background-color: white;
+  width: 800px; /* Aumentamos el ancho para permitir espacio para ambas secciones */
+  min-height: 300px;
+  margin: 50px auto;
+  border-radius: 10px;
+  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-  section {
-    display: table;
-  }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-  }
-  
-  .example-button-row {
-    display: table-cell;
-    max-width: 600px;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
-  .example-spacer {
-    flex: 1 1 auto;
-  }
-  .example-ripple-container {
-    cursor: pointer;
-    text-align: center;
-  
-    width: 300px;
-    height: 300px;
-    line-height: 300px;
-  
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-  
-    -webkit-user-drag: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /** Styles to make the demo look better. */
-  .example-ripple-checkbox {
-    margin: 6px 12px 6px 0;
-  }
-  
-  .example-ripple-form-field {
-    margin: 0 12px 0 0;
-  }
-    h1,strong{
-        color: aliceblue;
-    }
-    .example-container mat-form-field + mat-form-field {
-        margin-left: 8px;
-      }
-      mat-form-field {
-        margin: 25px;
-      }
-      
-      .example-right-align {
-        text-align: right;
-      }
-      
-      input.example-right-align::-webkit-outer-spin-button,
-      input.example-right-align::-webkit-inner-spin-button {
-        display: none;
-      }
+.logo {
+  width: 360px;
+  height: 120px;
+  border-radius: 10px;
+  border-color: black;
+  border-bottom: black, 10px;
+}
+.logoContenedor{
+  background-color: #ffa528;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.formularioContenedor {
+  width: 60%; /* El formulario ocupará el 60% del espacio */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  width: 60%; /* El formulario ocupará el 60% del espacio de la tarjeta */
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-button-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin-top: 10px;
+  width: 100%; /* Asegura que el botón de login ocupe todo el ancho */
+}
+
+mat-form-field {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+h1, strong {
+  color: #333;
+}
+.botonIS{
+  forced-color-adjust: #e6e6e6;
+  background-color: #e6e6e6;
+  border-radius: 1px;
+  width: 150px;
+}

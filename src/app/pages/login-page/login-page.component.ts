@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { LoginComponent } from '../../component/login/login.component';
 
 @Component({
@@ -10,5 +10,5 @@ import { LoginComponent } from '../../component/login/login.component';
   styleUrl: './login-page.component.css',
 })
 export default class LoginPageComponent {
-  title = 'login';
+  title = 'iniciar-sesion';
 }

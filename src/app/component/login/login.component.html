@@ -1,31 +1,31 @@
-<mat-card style="width: 600px; margin:10px;">
-    <h1 align="center">Welcome</h1>
-    <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <mat-label>User</mat-label>
-            <input matInput id="usernameInput" #message maxlength="256" placeholder="Ejemplo Roronoa..." #input>
-            <mat-hint align="start"><strong>Don't share your user</strong> </mat-hint>
-        </mat-form-field>
-    </form>
-    <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <mat-label>Password</mat-label>
-            <input matInput id="passwordInput" placeholder="Ejemplo *****..." [type]="hide() ? 'password' : 'text'" />
-            <mat-hint align="start"><strong>Don't share your password</strong> </mat-hint>
-            <button 
-            mat-icon-button 
-            matSuffix 
-            (click)="clickEvent($event)" 
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide()">
-                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-        </mat-form-field>
-    </form>
-
-    <section>
-        <div class="example-button-row">
-            <button mat-flat-button (click)="iniciarSesion()">Log in</button>
-        </div>
-    </section>
+<mat-card class="tarjetaPrincipal">
+<mat-grid-list cols="2">
+    <mat-grid-tile class="logoContenedor">
+        <img src="../../../assets/logo.jpeg" class="logo" alt="logo.jpeg">
+    </mat-grid-tile>
+    
+    <mat-grid-tile >
+        <div class="formularioContenedor">
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label >Usuario</mat-label>
+                <input matInput id="usernameInput" maxlength="256" placeholder="Ejemplo Roronoa...">
+                <mat-hint align="start"><strong>No compartas tu usuario</strong></mat-hint>
+              </mat-form-field>
+        
+              <mat-form-field class="example-full-width">
+                <mat-label>Contraseña</mat-label>
+                <input matInput id="passwordInput" placeholder="Ejemplo *****..." [type]="hide() ? 'password' : 'text'">
+                <mat-hint align="start"><strong>No compartas tu contraseña</strong></mat-hint>
+              </mat-form-field>
+        
+              <section class="example-button-row">
+                <button mat-flat-button (click)="iniciarSesion()" class="botonIS">Iniciar sesión</button>
+              </section>
+            </form>
+          </div>
+    
+    </mat-grid-tile>
+</mat-grid-list>
 </mat-card>
+  

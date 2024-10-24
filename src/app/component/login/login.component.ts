@@ -14,12 +14,14 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
 import { People } from '../../models/people/people.model';
 import { Observable } from 'rxjs';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     MatFormFieldModule,
+    MatGridListModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
@@ -63,7 +65,7 @@ export class LoginComponent implements OnInit {
     if (user) {
       console.log(user);
       console.log('Login successful');
-     window.location.href = '/welcome';
+     window.location.href = '/bienvenida';
     } else {
       console.log(user);
       alert('Invalid credentials');

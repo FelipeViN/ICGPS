@@ -1,7 +1,7 @@
 /* Layout principal */
 .main-layout {
   display: flex;
-  height: 100vh; /* Ocupa todo el alto de la pantalla */
+  height: 100vh;
   background-color: #f5f5f5;
 }
 
@@ -11,10 +11,27 @@
   background-color: #ffa528;
   padding: 20px;
   position: fixed;
-  height: 100%; /* Ocupa todo el alto de la pantalla */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+  padding: 8px;
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #c7c7c7;
 }
 
 /* Logo */
@@ -24,8 +41,8 @@
 }
 
 /* Contenedor Principal */
-.container {
-  margin-left: 220px; /* Ajuste para que no se solape con la barra lateral */
+.content-container {
+  margin-left: 230px; /* Espacio entre la barra lateral y el contenido */
   padding-top: 20px;
   display: flex;
   height: 100%;
@@ -36,20 +53,21 @@
 .main-row {
   display: flex;
   width: 100%;
-  gap: 20px; /* Espacio entre las dos columnas */
+  gap: 20px;
 }
 
 /* Columna izquierda (Información General) */
 .col-general {
-  flex: 0 0 30%; /* Ocupa el 33% del ancho */
-}
-
-/* Columna derecha (contiene dos filas) */
-.col-info {
-  flex: 0 0 70%; /* Ocupa el 66% del ancho */
+  flex: 0 0 60%; /* Ancho aumentado al 60% */
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Espacio entre las dos filas */
+}
+
+.col-info {
+  flex: 0 0 35%; /* Ancho reducido para ajustarse al nuevo tamaño de la columna izquierda */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* Tarjetas */
@@ -58,10 +76,9 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  height: 100%;
+  height: auto;
 }
 
-/* Encabezado de las tarjetas */
 .card-header {
   background-color: #f0f0f8;
   padding: 10px;
@@ -78,20 +95,7 @@
   margin-bottom: 20px;
 }
 
-/* General settings for the grid */
-.container {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-/* Styling similar to the provided palette */
+/* Ajuste general */
 body {
-  background-color: #e6e6e6;
-}
-
-.footer {
-  text-align: center;
-  padding: 10px;
   background-color: #e6e6e6;
 }

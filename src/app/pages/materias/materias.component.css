@@ -107,8 +107,6 @@
     fill: #ffa528; /* Cambia el color si el SVG lo permite */
   }
   
-
-  
   .materia-titulo {
     font-size: 1.2rem;
     color: #ffa528; /* Color consistente con el sidebar */
@@ -131,5 +129,50 @@
     cursor: pointer;
     align-self: flex-start;
     margin-top: 10px;
+  }
+  
+  /* Estilo para la vista de Horario */
+  .horario-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Tabla de Horario */
+  .horario-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  /* Encabezados de la tabla de horario */
+  .horario-table th {
+    background-color: #ffa528;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid #e0e0e0;
+  }
+  
+  /* Filas y celdas de la tabla de horario */
+  .horario-table td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+  }
+  
+  .horario-table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+  }
+  
+  /* Celda de hora */
+  .horario-table td.hora {
+    font-weight: bold;
+    color: #ffa528;
   }
   

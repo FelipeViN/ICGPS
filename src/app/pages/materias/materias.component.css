@@ -1,0 +1,178 @@
+/* Layout principal */
+.main-layout {
+    display: flex;
+    height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  /* Barra lateral */
+  .sidebar {
+    width: 200px;
+    background-color: #ffa528;
+    padding: 20px;
+    position: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+    padding: 8px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar a:hover {
+    background-color: #c7c7c7;
+  }
+  
+  /* Logo */
+  .logo {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  /* Contenedor de contenido */
+  .content-container {
+    margin-left: 230px;
+    padding: 20px;
+    width: calc(100% - 230px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Contenedor principal de las materias */
+  .materias-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Header de Materias y Horario */
+  .materias-header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .materias-header button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .materias-header button.active {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  /* Grid de materias */
+  .materias-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Ahora 4 columnas */
+    gap: 35px;
+    width: 100%;
+  }  
+  
+  /* Tarjetas de materias */
+  .materia-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .materia-icono {
+    width: 40px; /* Tamaño ajustado */
+    height: 40px;
+    fill: #ffa528; /* Cambia el color si el SVG lo permite */
+  }
+  
+  .materia-titulo {
+    font-size: 1.2rem;
+    color: #ffa528; /* Color consistente con el sidebar */
+    margin: 0;
+  }
+  
+  .materia-detalle, .materia-unidades, .materia-calificacion {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  .programa-btn {
+    background-color: #ffa528; /* Consistencia de color */
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 10px;
+  }
+  
+  /* Estilo para la vista de Horario */
+  .horario-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Tabla de Horario */
+  .horario-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  /* Encabezados de la tabla de horario */
+  .horario-table th {
+    background-color: #ffa528;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid #e0e0e0;
+  }
+  
+  /* Filas y celdas de la tabla de horario */
+  .horario-table td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+  }
+  
+  .horario-table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+  }
+  
+  /* Celda de hora */
+  .horario-table td.hora {
+    font-weight: bold;
+    color: #ffa528;
+  }
+  

@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
-import { People } from '../../models/people/people.model';
+import { People } from '../../models/ejemplo/people.model';
 import { Observable } from 'rxjs';
 import { MatGridListModule } from '@angular/material/grid-list';
 
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   loadUsers(): Observable<People[]> {
-    return this.http.get<People[]>('https://api.escuelajs.co/api/v1/users');
+    return this.http.get<People[]>('http://cecyte.test/api/Usuarios');
   }
 
   iniciarSesion() {

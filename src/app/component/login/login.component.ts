@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
 import { People } from '../../models/ejemplo/people.model';
+import { Usuarios } from '../../models/usuarios/usuarios.model'
 import { Observable } from 'rxjs';
 import { MatGridListModule } from '@angular/material/grid-list';
 
@@ -32,46 +33,59 @@ import { MatGridListModule } from '@angular/material/grid-list';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  // obteniendo a los usuarios de la api
   hide = signal(true);
-  @Input() people!: People;
+  @Input() usuario!: Usuarios; // No sé que hace exactamente
 
+  // variable http que es un tipo de inyeccion http
   http = inject(HttpClient);
-  peoples: People[] = [];
+  // indicamos un arreglo de Usuarios llamado usuarios
+  usuarios: Usuarios[] = [];
 
+  // Confirma de que haya datos validos, puede estar vacio
   ngOnInit() {
     this.loadUsers().subscribe((data) => {
-      this.peoples = data;
+      this.usuarios = data;
     });
   }
-
-  loadUsers(): Observable<People[]> {
-    return this.http.get<People[]>('http://cecyte.test/api/Usuarios');
+  
+  // obteniendo a los usuarios de la api, el "get" indica el tipo de metodo http
+  // el link es literalmente el link de la api
+  loadUsers(): Observable<Usuarios[]> {
+    return this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios');
   }
 
+  //metodo ts que usaremos en la Interfaz de Usuario
   iniciarSesion() {
+    //Sacamos los valores de la Interfaz de Usuario, es muy similar a JS.
     let usrInput = document.getElementById('usernameInput') as HTMLInputElement | null;
     let passInput = document.getElementById('passwordInput') as HTMLInputElement | null;
 
+    // Confirma que los campos no esten vacios
     if (usrInput?.value.trim() === '' || passInput?.value.trim() === '') {
+      //Envia una alerta, es algo fea pero funciona.
       alert('Fields can\'t be empty');
       return;
     }
 
-    // devuelve al usuario en caso de encontrarlo
-    let user = this.peoples.find(
-      user => user.email === usrInput?.value && user.password === passInput?.value
+    // Devuelve al usuario en caso de encontrarlo
+    let user = this.usuarios.find(
+      user => user.email === usrInput?.value && user.contraseña === passInput?.value
     );
-    //comprueba que la variable user no este vacia, en caso de ser undefined hace otra cosa
+    // Comprueba que la variable user no este vacia, en caso de ser undefined hace otra cosa
     if (user) {
       console.log(user);
       console.log('Login successful');
+      // Redirecciona a otra pagina dentro del sistema
      window.location.href = '/bienvenida';
     } else {
+      // Envia una alerta de que las credenciales son invalidas
       console.log(user);
       alert('Invalid credentials');
     }
   }
-
+  
+  // Ni me acuerdo que hace esto
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();

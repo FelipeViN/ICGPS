@@ -12,10 +12,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
-import { People } from '../../models/ejemplo/people.model';
 import { Usuarios } from '../../models/usuarios/usuarios.model'
 import { Observable } from 'rxjs';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +33,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  constructor(private router: Router) {}
   // obteniendo a los usuarios de la api
   hide = signal(true);
   @Input() usuario!: Usuarios; // No sé que hace exactamente
@@ -73,11 +74,10 @@ export class LoginComponent implements OnInit {
       user => user.email === usrInput?.value && user.contraseña === passInput?.value
     );
     // Comprueba que la variable user no este vacia, en caso de ser undefined hace otra cosa
-    if (user) {
-      console.log(user);
-      console.log('Login successful');
-      // Redirecciona a otra pagina dentro del sistema
-     window.location.href = '/bienvenida';
+    if (user) { 
+      // Redirecciona a otra pagina dentro de la aplicacion web
+      alert(user.email+''+user.contraseña);
+      window.location.href = '/bienvenida';
     } else {
       // Envia una alerta de que las credenciales son invalidas
       console.log(user);
@@ -89,5 +89,26 @@ export class LoginComponent implements OnInit {
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
+  }
+  irBienvenida(){
+    window.location.href = '/bienvenida';
+  }
+  // no se por que no funciona el de arriba pero este si, en todo caso fijense mas en este xd
+  pruebaBoton(){
+    let usrInput = document.getElementById('usernameInput') as HTMLInputElement | null;
+    let passInput = document.getElementById('passwordInput') as HTMLInputElement | null;
+    console.log(usrInput?.value);
+    console.log(passInput?.value);
+    let user = this.usuarios.find(
+      user => user.email === usrInput?.value && user.contraseña === passInput?.value
+    );
+    console.log(user?.nombre);
+    if(user){
+      console.log("Hay algo");
+      window.location.href = '/bienvenida';
+    } else {
+      console.log("No hay algo");
+      window.location.href = '/iniciar-sesion';
+    }
   }
 }

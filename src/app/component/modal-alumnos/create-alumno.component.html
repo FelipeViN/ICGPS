@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Revise bien cada campo</h2>
+<mat-dialog-content [formGroup]="alumnoForm">
+  <mat-form-field>
+    <mat-label>Nombre/s</mat-label>
+    <input matInput formControlName="nombre" (input)="allowOnlyLetters($event)" required />
+    <mat-error *ngIf="nombreError">{{ nombreError }}</mat-error>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Apellido Paterno</mat-label>
+    <input matInput formControlName="apellidoPaterno" (input)="allowOnlyLetters($event)" required />
+    <mat-error *ngIf="apellidoPaternoError">{{ apellidoPaternoError }}</mat-error>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Apellido Materno</mat-label>
+    <input matInput formControlName="apellidoMaterno" (input)="allowOnlyLetters($event)" required />
+    <mat-error *ngIf="apellidoMaternoError">{{ apellidoMaternoError }}</mat-error>
+  </mat-form-field>
+  
+  
+  <mat-form-field>
+    <mat-label>Matricula</mat-label>
+    <input matInput formControlName="matricula" required />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+           placeholder="Ex. pat@example.com">
+           <mat-hint></mat-hint>
+           @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+             <mat-error>Introduce un email valido</mat-error>
+           }
+           @if (emailFormControl.hasError('required')) {
+             <mat-error>Email es <strong>requerido</strong></mat-error>
+           }
+         </mat-form-field>
+       
+
+         <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="contraseña" required type="password" />
+          <mat-error *ngIf="alumnoForm.get('contraseña')?.invalid">
+            {{ passwordError }}
+          </mat-error>
+        </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Semestre</mat-label>
+    <input matInput formControlName="semestre" required type="number" />
+    <mat-error *ngIf="alumnoForm.get('semestre')?.hasError('pattern')">Solo números positivos</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onSubmit()" [disabled]="alumnoForm.invalid" cdkFocusInitial>Registrar</button>
+</mat-dialog-actions>

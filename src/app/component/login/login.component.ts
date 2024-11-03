@@ -108,8 +108,8 @@ export class LoginComponent implements OnInit {
     if(user){
       console.log("Hay algo");
       this.authService.setUser(user);
-      console.log(this.authService.currentUser$);
-      //window.location.href = '/bienvenida';
+      console.log(this.authService.currentUser$, 'esto es');
+      window.location.href = '/bienvenida';
     } else {
       console.log("No hay algo");
       window.location.href = '/iniciar-sesion';

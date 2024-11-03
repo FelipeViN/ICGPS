@@ -10,6 +10,6 @@ export const routes: Routes = [
     {path: 'grupos', loadComponent:()=>import('./pages/grupos/grupos.component')},
     {path: 'mapa', loadComponent:()=>import('./pages/mapa/mapa.component')},
     {path: 'credencial', loadComponent:()=>import('./pages/credencial/credencial.component')},
-    {path: '', redirectTo: 'bienvenida', pathMatch: 'full'},
-    { path: '**', redirectTo: '/bienvenida' }
+    {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
+    { path: '**', redirectTo: '/iniciar-sesion' }
 ];

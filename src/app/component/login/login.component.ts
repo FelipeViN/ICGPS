@@ -4,7 +4,8 @@ import {
   signal,
   Input,
   inject,
-  OnInit
+  OnInit,
+  Output
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +17,7 @@ import { Usuarios } from '../../models/usuarios/usuarios.model'
 import { Observable } from 'rxjs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +35,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
   // obteniendo a los usuarios de la api
   hide = signal(true);
   @Input() usuario!: Usuarios; // No sé que hace exactamente
@@ -105,7 +107,9 @@ export class LoginComponent implements OnInit {
     console.log(user?.nombre);
     if(user){
       console.log("Hay algo");
-      window.location.href = '/bienvenida';
+      this.authService.setUser(user);
+      console.log(this.authService.currentUser$);
+      //window.location.href = '/bienvenida';
     } else {
       console.log("No hay algo");
       window.location.href = '/iniciar-sesion';

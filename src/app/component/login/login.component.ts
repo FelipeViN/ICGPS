@@ -112,6 +112,7 @@ export class LoginComponent implements OnInit {
       window.location.href = '/bienvenida';
     } else {
       console.log("No hay algo");
+      alert("Credenciales invalidas");
       window.location.href = '/iniciar-sesion';
     }
   }

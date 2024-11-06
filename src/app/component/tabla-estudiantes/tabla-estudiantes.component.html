@@ -29,6 +29,15 @@
           <th mat-header-cell *matHeaderCellDef class="texto"> Semestre </th>
           <td mat-cell *matCellDef="let element" class="texto"> {{element.semestre}} </td>
         </ng-container>
+
+        <!-- Acciones -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="texto">Acciones</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button  class="botonS" style="color:black;">Inspeccionar</button>
+            <button mat-button color="warn" class="botonB" style="color:black;">Borrar</button>
+          </td>
+        </ng-container>
       
         <!-- Header and Row Definitions -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -9,3 +9,15 @@
 .texto{
     color: black;
 }
+.botonS{
+    background-color: #ffa528;
+    border-radius: 5px;
+    color:black;
+    margin: 20px;
+}
+.botonB{
+    background-color: #289bff;
+    border-radius: 5px;
+    color:black;
+    margin: 20px;
+}

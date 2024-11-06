@@ -6,16 +6,17 @@ import { HttpClient } from '@angular/common/http';
 import { Usuarios } from '../../models/usuarios/usuarios.model';
 import { Estudiantes } from '../../models/estudiantes/estudiantes.model';
 import { UsuarioEstudiante } from '../../models/usuario-estudiante/usuario-estudiante.model';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-tabla-estudiantes',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
   templateUrl: './tabla-estudiantes.component.html',
   styleUrls: ['./tabla-estudiantes.component.css']
 })
 export class TablaEstudiantesComponent implements OnInit {
-  displayedColumns: string[] = ['matricula', 'nombre', 'email', 'semestre']; // Reemplazado 'id' por 'matricula'
+  displayedColumns: string[] = ['matricula', 'nombre', 'email', 'semestre', 'actions']; // Reemplazado 'id' por 'matricula'
   dataSource = new MatTableDataSource<UsuarioEstudiante>([]);
 
   constructor(private http: HttpClient) {}

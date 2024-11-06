@@ -38,9 +38,12 @@
     text-align: center;
     padding: 10px;
     background-color: #e6e6e6;
+    margin-top: 1px;
   }
   .matrioshka{
-    background-color: #fee7a2;
+    background-color: white;
     margin: 10px;
+    flex-grow: 1;
+    align-items: flex-end;
   }
   

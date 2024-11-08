@@ -31,6 +31,10 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Usuarios } from '../../models/usuarios/usuarios.model';
 import { Estudiantes } from '../../models/estudiantes/estudiantes.model';
+import { Profesores } from '../../models/profesores/profesores.model';
+import { Administrativos } from '../../models/administrativos/administrativos.model';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -74,6 +78,7 @@ export class ModalAlumnosComponent {
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: 'create-alumno.component.html',
+  styleUrl: './card-alumnos.component.css',
   standalone: true,
   imports: [
     CommonModule,
@@ -86,18 +91,28 @@ export class ModalAlumnosComponent {
     MatDialogActions,
     MatDialogClose,
     ReactiveFormsModule,
+    MatSelect,
+    MatOption,
   ],
 })
 export class DialogOverviewExampleDialog {
   readonly dialogRef = inject(MatDialogRef<DialogOverviewExampleDialog>);
   readonly http = inject(HttpClient);
   readonly dialog = inject(MatDialog);
+  showTipoEstudianteFields = false;
 
   ngOnInit() {
     this.alumnoForm.markAllAsTouched();
+    // Subscribe to tipoUsuario changes to toggle the visibility of tipoEstudiante fields
+    this.alumnoForm.get('tipoUsuario')?.valueChanges.subscribe(value => {
+      this.showTipoEstudianteFields = (value === 'estudiante');
+    });
   }
 
   alumnoForm = new FormGroup({
+    tipoUsuario:new FormControl('',[
+      Validators.required,
+    ]),
     nombre: new FormControl('', [
       Validators.required,
       Validators.pattern('^[a-zA-ZÀ-ÿ\\u00f1\\u00d1]+$'),
@@ -118,7 +133,7 @@ export class DialogOverviewExampleDialog {
     }),
     semestre: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[0-9]\\d*$'),
+      Validators.pattern('^[1-9]\\d*$'),
     ]),
   });
 
@@ -210,7 +225,7 @@ export class DialogOverviewExampleDialog {
             apellidoMaterno: this.alumnoForm.value.apellidoMaterno!,
             email: this.alumnoForm.value.email!,
             contraseña: this.alumnoForm.value.contraseña!,
-            tipoUsuario: 'estudiante',
+            tipoUsuario: this.alumnoForm.value.tipoUsuario!,
             creationAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           };

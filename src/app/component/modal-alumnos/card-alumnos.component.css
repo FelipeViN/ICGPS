@@ -5,3 +5,8 @@
     border-radius: 5px;
     width: 150px;
 }
+.modalFondo{
+    background-color: white;
+    width: 500px;
+    height: 500px;
+}

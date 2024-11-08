@@ -25,27 +25,25 @@
       </mat-form-field>
 
     </div>
-    <div *ngIf="showTipoEstudianteFields" class="tipoProfesor">
+    <div *ngIf="showTipoProfesorFields" class="tipoProfesor">
       <mat-form-field>
-        <mat-label>Matricula</mat-label>
+        <mat-label>Grado de estudio</mat-label>
         <input matInput formControlName="matricula" required />
       </mat-form-field>
       <mat-form-field style="margin-left: 10px;">
-        <mat-label>Semestre</mat-label>
-        <input matInput formControlName="semestre" required type="number" />
-        <mat-error *ngIf="alumnoForm.get('semestre')?.hasError('pattern')">Solo números positivos</mat-error>
+        <mat-label>Matricula</mat-label>
+        <input matInput formControlName="semestre" required />
       </mat-form-field>
 
     </div>
-    <div *ngIf="showTipoEstudianteFields" class="tipoAdministrativo">
+    <div *ngIf="showTipoAdministrativoFields" class="tipoAdministrativo">
       <mat-form-field>
-        <mat-label>Matricula</mat-label>
+        <mat-label>Departamento</mat-label>
         <input matInput formControlName="matricula" required />
       </mat-form-field>
       <mat-form-field style="margin-left: 10px;">
-        <mat-label>Semestre</mat-label>
-        <input matInput formControlName="semestre" required type="number" />
-        <mat-error *ngIf="alumnoForm.get('semestre')?.hasError('pattern')">Solo números positivos</mat-error>
+        <mat-label>Cargo</mat-label>
+        <input matInput formControlName="semestre" required />
       </mat-form-field>
 
     </div>

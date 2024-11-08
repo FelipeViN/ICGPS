@@ -100,12 +100,20 @@ export class DialogOverviewExampleDialog {
   readonly http = inject(HttpClient);
   readonly dialog = inject(MatDialog);
   showTipoEstudianteFields = false;
+  showTipoProfesorFields = false;
+  showTipoAdministrativoFields = false;
 
   ngOnInit() {
     this.alumnoForm.markAllAsTouched();
     // Subscribe to tipoUsuario changes to toggle the visibility of tipoEstudiante fields
     this.alumnoForm.get('tipoUsuario')?.valueChanges.subscribe(value => {
       this.showTipoEstudianteFields = (value === 'estudiante');
+    });
+    this.alumnoForm.get('tipoUsuario')?.valueChanges.subscribe(value => {
+      this.showTipoProfesorFields = (value === 'profesor');
+    });
+    this.alumnoForm.get('tipoUsuario')?.valueChanges.subscribe(value => {
+      this.showTipoAdministrativoFields = (value === 'secretaria');
     });
   }
 
@@ -136,6 +144,7 @@ export class DialogOverviewExampleDialog {
       Validators.pattern('^[1-9]\\d*$'),
     ]),
   });
+  
 
   get nombreError() {
     const control = this.alumnoForm.get('nombre');
@@ -214,7 +223,7 @@ export class DialogOverviewExampleDialog {
     if (this.alumnoForm.valid) {
       // Abrir el segundo modal de confirmación
       const confirmDialogRef = this.dialog.open(ConfirmDialogComponent);
-
+  
       confirmDialogRef.afterClosed().subscribe((result) => {
         if (result) {
           // Si se confirma, guarda el usuario en la API
@@ -229,25 +238,16 @@ export class DialogOverviewExampleDialog {
             creationAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           };
-
+  
           this.http.post<Usuarios>('http://cecyte.test/api/Usuarios', usuario).subscribe({
             next: (usuarioCreado) => {
-              const estudiante: Estudiantes = {
-                id: 0,
-                usuarioID: usuarioCreado.id,
-                matricula: this.alumnoForm.value.matricula!,
-                semestre: parseInt(this.alumnoForm.value.semestre!, 10),
-                creationAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-              };
-
-              this.http.post<Estudiantes>('http://cecyte.test/api/Estudiantes', estudiante).subscribe({
-                next: () => {
-                  alert('Alumno registrado con éxito');
-                  this.dialogRef.close();
-                },
-                error: () => alert('Error al registrar al estudiante'),
-              });
+              if (this.alumnoForm.value.tipoUsuario === 'estudiante') {
+                this.registerEstudiante(usuarioCreado.id);
+              } else if (this.alumnoForm.value.tipoUsuario === 'profesor') {
+                this.registerProfesor(usuarioCreado.id);
+              } else if (this.alumnoForm.value.tipoUsuario === 'secretaria') {
+                this.registerAdministrativo(usuarioCreado.id);
+              }
             },
             error: () => alert('Error al registrar al usuario'),
           });
@@ -257,6 +257,7 @@ export class DialogOverviewExampleDialog {
       alert('Por favor, completa todos los campos');
     }
   }
+  
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -271,6 +272,62 @@ export class DialogOverviewExampleDialog {
 
   emailFormControl = this.alumnoForm.get('email') as FormControl;
   matcher = new MyErrorStateMatcher();
+  private registerEstudiante(usuarioID: number) {
+    const estudiante: Estudiantes = {
+      id: 0,
+      usuarioID: usuarioID,
+      matricula: this.alumnoForm.value.matricula!,
+      semestre: parseInt(this.alumnoForm.value.semestre!, 10),
+      creationAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  
+    this.http.post<Estudiantes>('http://cecyte.test/api/Estudiantes', estudiante).subscribe({
+      next: () => {
+        alert('Estudiante registrado con éxito');
+        this.dialogRef.close();
+      },
+      error: () => alert('Error al registrar al estudiante'),
+    });
+  }
+  
+  private registerProfesor(usuarioID: number) {
+    const profesor: Profesores = {
+      id: 0,
+      usuarioID: usuarioID,
+      numeroEmpleado: this.alumnoForm.value.semestre!,
+      especialidad: this.alumnoForm.value.semestre!,
+      creationAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  
+    this.http.post<Profesores>('http://cecyte.test/api/Profesores', profesor).subscribe({
+      next: () => {
+        alert('Profesor registrado con éxito');
+        this.dialogRef.close();
+      },
+      error: () => alert('Error al registrar al profesor'),
+    });
+  }
+  
+  private registerAdministrativo(usuarioID: number) {
+    const administrativo: Administrativos = {
+      id: 0,
+      usuarioID: usuarioID,
+      departamento: this.alumnoForm.value.matricula!,
+      cargo: this.alumnoForm.value.semestre!,
+      creationAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  
+    this.http.post<Administrativos>('http://cecyte.test/api/Administrativos', administrativo).subscribe({
+      next: () => {
+        alert('Administrativo registrado con éxito');
+        this.dialogRef.close();
+      },
+      error: () => alert('Error al registrar al administrativo'),
+    });
+  }
 }
 
 // Segundo modal de confirmación

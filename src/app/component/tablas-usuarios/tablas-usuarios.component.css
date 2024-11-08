@@ -1,3 +1,6 @@
 .etiqueta{
     color: black;
 }
+.custom-tab-label {
+    color: black; /* Cambia esto al color que prefieras */
+}

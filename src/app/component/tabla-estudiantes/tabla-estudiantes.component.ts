@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./tabla-estudiantes.component.css']
 })
 export class TablaEstudiantesComponent implements OnInit {
-  displayedColumns: string[] = ['matricula', 'nombre', 'email', 'semestre', 'actions']; // Reemplazado 'id' por 'matricula'
+  displayedColumns: string[] = ['matricula', 'nombre', 'email', 'semestre', 'actions'];
   dataSource = new MatTableDataSource<UsuarioEstudiante>([]);
 
   constructor(private http: HttpClient) {}
@@ -27,7 +27,7 @@ export class TablaEstudiantesComponent implements OnInit {
 
   loadEstudiantes(): void {
     this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios').subscribe((usuarios) => {
-      const estudiantes = usuarios.filter(usuario => usuario.tipoUsuario === 'estudiante');
+      const estudiantes = usuarios.filter(usuario => usuario.tipoUsuario === 'estudiante' && usuario.Estatus === 1);
       
       this.http.get<Estudiantes[]>('http://cecyte.test/api/Estudiantes').subscribe((estudiantesData) => {
         const estudiantesCompletos: UsuarioEstudiante[] = estudiantes.map(est => {
@@ -47,5 +47,28 @@ export class TablaEstudiantesComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  borrar(id: number): void {
+    const url = `http://cecyte.test/api/Usuarios/${id}`;
+  
+    // Obtener los datos actuales del usuario
+    this.http.get<Usuarios>(url).subscribe(usuario => {
+      // Actualizar solo el campo Estatus a 0, manteniendo los demás campos iguales
+      const usuarioActualizado = {
+        nombre: usuario.nombre,
+        apellidoPaterno: usuario.apellidoPaterno,
+        apellidoMaterno: usuario.apellidoMaterno,
+        email: usuario.email,
+        contraseña: usuario.contraseña,
+        tipoUsuario: usuario.tipoUsuario,
+        Estatus: 0  // Cambiamos el estado a 0
+      };
+  
+      // Enviar la actualización con todos los campos requeridos
+      this.http.put(url, usuarioActualizado).subscribe(() => {
+        this.loadEstudiantes();
+      });
+    });
   }
 }

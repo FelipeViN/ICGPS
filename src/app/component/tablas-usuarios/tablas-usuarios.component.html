@@ -1,11 +1,21 @@
-<mat-tab-group>
-    <mat-tab label="Estudiantes" class="etiqueta" style="color: black;"> 
+<mat-tab-group style="color: black;">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="custom-tab-label">Estudiantes</span>
+    </ng-template> 
       <app-tabla-estudiantes></app-tabla-estudiantes>
     </mat-tab>
-    <mat-tab label="Profesores" class="etiqueta"> 
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="custom-tab-label">Profesores</span>
+    </ng-template>  
      <app-tabla-profesores></app-tabla-profesores>
     </mat-tab>
-    <mat-tab label="Secretarias" class="etiqueta"> 
+    <mat-tab> 
+      <ng-template mat-tab-label>
+        <span class="custom-tab-label">Administrativos</span>
+    </ng-template> 
       <app-tabla-administrativos></app-tabla-administrativos>
     </mat-tab>
+
   </mat-tab-group>

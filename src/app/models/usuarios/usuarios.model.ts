@@ -6,6 +6,7 @@ export interface Usuarios {
     email: string;
     contraseña: string;
     tipoUsuario: string;
+    Estatus: number;
     creationAt: string;
     updatedAt: string;
   }

@@ -1,10 +1,7 @@
 <div style="background-color: white;">
   <h2 mat-dialog-title style="color: black;">Revise bien cada campo</h2>
-  <mat-dialog-content [formGroup]="alumnoForm" style="
-      width: 500px;
-    height: 500px;
-        background-color: white;
-  ">
+  <mat-dialog-content [formGroup]="alumnoForm" style="width: 500px; height: 500px; background-color: white;">
+    <!-- Campo para seleccionar el tipo de usuario -->
     <mat-form-field>
       <mat-label>Tipo de usuario</mat-label>
       <mat-select formControlName="tipoUsuario">
@@ -13,41 +10,47 @@
         <mat-option value="secretaria">Secretaria</mat-option>
       </mat-select>
     </mat-form-field>
+
+    <!-- Campos específicos para Estudiante -->
     <div *ngIf="showTipoEstudianteFields" class="tipoEstudiante">
       <mat-form-field>
         <mat-label>Matricula</mat-label>
-        <input matInput formControlName="matricula" required />
+        <input matInput formControlName="matricula" (input)="allowOnlyNumbers($event)" maxlength="14" required />
+        <mat-error *ngIf="matriculaError">{{ matriculaError }}</mat-error>
       </mat-form-field>
       <mat-form-field style="margin-left: 10px;">
         <mat-label>Semestre</mat-label>
         <input matInput formControlName="semestre" required type="number" />
         <mat-error *ngIf="alumnoForm.get('semestre')?.hasError('pattern')">Solo números positivos</mat-error>
       </mat-form-field>
-
     </div>
+
+    <!-- Campos específicos para Profesor -->
     <div *ngIf="showTipoProfesorFields" class="tipoProfesor">
       <mat-form-field>
-        <mat-label>Grado de estudio</mat-label>
-        <input matInput formControlName="matricula" required />
+        <mat-label>Número de Empleado</mat-label>
+        <input matInput formControlName="numeroEmpleado" (input)="allowOnlyNumbers($event)" />
       </mat-form-field>
       <mat-form-field style="margin-left: 10px;">
-        <mat-label>Matricula</mat-label>
-        <input matInput formControlName="semestre" required />
+        <mat-label>Especialidad</mat-label>
+        <input matInput formControlName="especialidad" (input)="allowOnlyLetters($event)" required />
       </mat-form-field>
-
     </div>
+
+    <!-- Campos específicos para Administrativo -->
     <div *ngIf="showTipoAdministrativoFields" class="tipoAdministrativo">
       <mat-form-field>
         <mat-label>Departamento</mat-label>
-        <input matInput formControlName="matricula" required />
+        <input matInput formControlName="departamento" (input)="allowOnlyLetters($event)" required />
       </mat-form-field>
       <mat-form-field style="margin-left: 10px;">
         <mat-label>Cargo</mat-label>
-        <input matInput formControlName="semestre" required />
+        <input matInput formControlName="cargo" (input)="allowOnlyLetters($event)" required />
       </mat-form-field>
-
     </div>
-    <div>
+
+    <!-- Campos comunes -->
+    <div class="genericos">
       <mat-form-field>
         <mat-label>Nombre/s</mat-label>
         <input matInput formControlName="nombre" (input)="allowOnlyLetters($event)" required />
@@ -60,7 +63,6 @@
         <input matInput formControlName="apellidoPaterno" (input)="allowOnlyLetters($event)" required />
         <mat-error *ngIf="apellidoPaternoError">{{ apellidoPaternoError }}</mat-error>
       </mat-form-field>
-    
       <mat-form-field style="margin-left: 10px;">
         <mat-label>Segundo Apellido</mat-label>
         <input matInput formControlName="apellidoMaterno" (input)="allowOnlyLetters($event)" required />
@@ -70,21 +72,16 @@
     <div>
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-               placeholder="Ex. pat@example.com">
-               <mat-hint></mat-hint>
-               @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
-                 <mat-error>Introduce un email valido</mat-error>
-               }
-               @if (emailFormControl.hasError('required')) {
-                 <mat-error>Email es <strong>requerido</strong></mat-error>
-               }
-             </mat-form-field>
+        <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher" placeholder="Ex. pat@example.com" />
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">Introduce un email valido</mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">Email es <strong>requerido</strong></mat-error>
+      </mat-form-field>
     </div>
     <div>
       <mat-form-field>
         <mat-label>Contraseña</mat-label>
-        <input matInput formControlName="contraseña" required type="password" />
+        <input matInput formControlName="contraseña" #contrasea maxlength="16" required type="password" />
         <mat-error *ngIf="alumnoForm.get('contraseña')?.invalid">
           {{ passwordError }}
         </mat-error>
@@ -92,20 +89,9 @@
     </div>
   </mat-dialog-content>
   
+
   <mat-dialog-actions>
-    <button mat-button (click)="onNoClick()"
-    style="
-    background-color: #289bff;
-    border-radius: 5px;
-    color:black;
-    margin: 20px;"
-    >Cancelar</button>
-    <button mat-button (click)="onSubmit()" [disabled]="alumnoForm.invalid" cdkFocusInitial
-    style="
-    background-color: #ffa528;
-    border-radius: 5px;
-    color:black;
-    margin: 20px;"
-    >Registrar</button>
+    <button mat-button (click)="onNoClick()" style="background-color: #289bff; border-radius: 5px; color:black; margin: 20px;">Cancelar</button>
+    <button mat-button (click)="onSubmit()" [disabled]="alumnoForm.invalid" cdkFocusInitial style="background-color: #ffa528; border-radius: 5px; color:black; margin: 20px;">Registrar</button>
   </mat-dialog-actions>
 </div>

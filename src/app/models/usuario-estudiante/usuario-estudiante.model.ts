@@ -1,5 +1,5 @@
 export interface UsuarioEstudiante {
-    id: number;
+  id?: number; // Cambiamos `id` para que sea opcional
     nombre: string;
     apellidoPaterno: string;
     apellidoMaterno: string;

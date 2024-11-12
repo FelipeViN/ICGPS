@@ -42,7 +42,7 @@ export class TablaEstudiantesComponent implements OnInit {
         const estudiantesCompletos: UsuarioEstudiante[] = estudiantes.map(est => {
           const estudianteData = estudiantesData.find(e => e.usuarioID === est.id);
           return {
-            id: estudianteData?.id || 0,               // ID específico del estudiante
+            id: estudianteData?.id || 0,               // ID específico del estudiante, con 0 como valor predeterminado
             usuarioID: est.id,                         // ID del usuario en Usuarios
             nombre: est.nombre,
             apellidoPaterno: est.apellidoPaterno,
@@ -50,10 +50,10 @@ export class TablaEstudiantesComponent implements OnInit {
             email: est.email,
             tipoUsuario: est.tipoUsuario,
             Estatus: est.Estatus,
-            matricula: estudianteData?.matricula || '', // Matricula opcional
-            semestre: estudianteData?.semestre || 0,    // Semestre opcional
-            creationAt: est.creationAt || '',           // Fecha de creación
-            updatedAt: est.updatedAt || ''              // Última fecha de modificación
+            matricula: estudianteData?.matricula,      // Matricula opcional
+            semestre: estudianteData?.semestre,        // Semestre opcional
+            creationAt: est.creationAt,                // Fecha de creación
+            updatedAt: est.updatedAt                   // Última fecha de modificación
           };
         });
   
@@ -61,6 +61,7 @@ export class TablaEstudiantesComponent implements OnInit {
       });
     });
   }
+  
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -68,22 +69,24 @@ export class TablaEstudiantesComponent implements OnInit {
   }
 
   borrar(id: number): void {
-    const url = `http://cecyte.test/api/Usuarios/${id}`;
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
-    this.http.get<Usuarios>(url).subscribe(usuario => {
-      const usuarioActualizado = {
-        nombre: usuario.nombre,
-        apellidoPaterno: usuario.apellidoPaterno,
-        apellidoMaterno: usuario.apellidoMaterno,
-        email: usuario.email,
-        contraseña: usuario.contraseña,
-        tipoUsuario: usuario.tipoUsuario,
-        Estatus: 0
-      };
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Solo procederá con la eliminación si el usuario confirma
+        const url = `http://cecyte.test/api/Usuarios/${id}`;
+        
+        this.http.get<Usuarios>(url).subscribe(usuario => {
+          const usuarioActualizado = {
+            ...usuario,
+            Estatus: 0 // Cambiar el estado del usuario a 0 (inactivo)
+          };
 
-      this.http.put(url, usuarioActualizado).subscribe(() => {
-        this.loadEstudiantes();
-      });
+          this.http.put(url, usuarioActualizado).subscribe(() => {
+            this.loadEstudiantes(); // Recargar la lista después de la eliminación
+          });
+        });
+      }
     });
   }
 
@@ -428,7 +431,7 @@ updateStudent(): void {
           };
   
           // Realizamos la solicitud PUT para actualizar los datos del usuario
-          this.http.put<Usuarios>(`http://cecyte.test/api/Usuarios/${this.data.id}`, usuario).subscribe({
+          this.http.put<Usuarios>(`http://cecyte.test/api/Usuarios/${this.data.usuarioID}`, usuario).subscribe({
             next: () => {
               if (this.alumnoForm.value.tipoUsuario === 'estudiante') {
                 this.updateEstudiante(this.data.id);  // Pasamos usuarioID en lugar de id
@@ -472,7 +475,7 @@ updateStudent(): void {
   private updateEstudiante(usuarioID: number): void {
     const estudiante: Estudiantes = {
       id: this.data.estudianteId,  // Asegúrate de que `this.data.estudianteId` está definido
-      usuarioID: usuarioID,
+      usuarioID: this.data.usuarioID,
       matricula: this.alumnoForm.value.matricula!,
       semestre: parseInt(this.alumnoForm.value.semestre!, 10),
       creationAt: this.data.estudianteCreationAt,
@@ -508,7 +511,6 @@ updateStudent(): void {
     });
   }
   
-
   private updateAdministrativo(usuarioID: number): void {
     const administrativo: Administrativos = {
       id: this.data.administrativoId,  // ID específico del administrativo
@@ -554,3 +556,26 @@ export class ConfirmDialogComponent {
   }
 }
 
+
+@Component({
+  selector: 'app-confirm-delete-dialog',
+  templateUrl: './confirm-delete.component.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogActions,
+    MatButtonModule,
+    MatDialogContent
+  ],
+})
+export class ConfirmDeleteDialogComponent {
+  constructor(private dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>) {}
+
+  onConfirm(): void {
+    this.dialogRef.close(true);
+  }
+
+  onCancel(): void {
+    this.dialogRef.close(false);
+  }
+}

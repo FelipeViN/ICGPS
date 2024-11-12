@@ -36,8 +36,8 @@ export class ToolbarComponent implements OnInit{
   irDatosPersonales(){
     window.location.href = '/datosPersonales';
   }
-  irAlumnos(){
-    window.location.href = '/alumnos';
+  irUsuarios(){
+    window.location.href = '/usuarios';
   }
   irProfesores(){
     window.location.href = '/profesores';

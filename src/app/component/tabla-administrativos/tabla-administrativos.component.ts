@@ -59,6 +59,7 @@ export class TablaAdministrativosComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   borrar(id: number): void {
+    console.log(id);
     const url = `http://cecyte.test/api/Usuarios/${id}`;
   
     // Obtener los datos actuales del usuario

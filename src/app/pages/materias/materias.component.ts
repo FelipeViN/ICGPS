@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ToolbarComponent } from "../../component/toolbar/toolbar.component";
 
 interface MateriaHorario {
   hora: string;
@@ -13,7 +14,7 @@ interface MateriaHorario {
 @Component({
   selector: 'app-materias',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ToolbarComponent],
   templateUrl: './materias.component.html',
   styleUrls: ['./materias.component.css']
 })

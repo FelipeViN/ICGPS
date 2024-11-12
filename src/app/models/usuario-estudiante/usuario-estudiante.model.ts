@@ -5,6 +5,7 @@ export interface UsuarioEstudiante {
     apellidoMaterno: string;
     email: string;
     tipoUsuario: string;
+    Estatus: number;
     creationAt: string;
     updatedAt: string;
     matricula?: string;

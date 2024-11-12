@@ -33,6 +33,7 @@ export class TablaProfesoresComponent implements OnInit {
           const profesorData = profesoresData.find(p => p.usuarioID === prof.id);
           return {
             ...prof,
+            usuarioID: prof.id,
             numeroEmpleado: profesorData?.numeroEmpleado,
             especialidad: profesorData?.especialidad,
           };
@@ -66,7 +67,7 @@ export class TablaProfesoresComponent implements OnInit {
   
       // Enviar la actualización con todos los campos requeridos
       this.http.put(url, usuarioActualizado).subscribe(() => {
-        this.loadProfesores();
+        this.loadProfesores();  // Actualizar la tabla de profesores
       });
     });
   }

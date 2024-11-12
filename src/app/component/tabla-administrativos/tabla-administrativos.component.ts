@@ -31,7 +31,7 @@ export class TablaAdministrativosComponent implements OnInit {
   loadAdministrativos(): void {
     this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios').subscribe((usuarios) => {
       // Filtramos solo los usuarios con tipo 'administrativo' y Estatus 1
-      const administrativos = usuarios.filter(usuario => usuario.tipoUsuario === 'administrativo' && usuario.Estatus === 1);
+      const administrativos = usuarios.filter(usuario => usuario.tipoUsuario === 'secretaria' && usuario.Estatus === 1);
   
       this.http.get<Administrativos[]>('http://cecyte.test/api/Administrativos').subscribe((administrativosData) => {
         const administrativosCompletos = administrativos.map(admin => {

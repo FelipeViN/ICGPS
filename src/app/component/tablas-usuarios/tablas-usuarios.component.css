@@ -1,0 +1,23 @@
+.etiqueta{
+    color: black;
+}
+.custom-tab-label {
+    color: black; /* Cambia esto al color que prefieras */
+    font-style:italic;
+}
+.tabs{
+    color: black;
+}
+.mat-mdc-tab-label-container{
+    background-color: orange;
+}
+.mat-mdc-tab-list{
+    background-color: orange;
+}
+.mat-mdc-tab-header{
+    background-color: orange;
+}
+.mat-tab-group{
+    background-color: orange;
+}
+

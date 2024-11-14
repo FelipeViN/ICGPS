@@ -1,0 +1,15 @@
+.modal{
+    margin: 20px;
+    margin-bottom: 20px;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    width: 150px;
+}
+.modalFondo{
+    background-color: white;
+    width: 500px;
+    height: 500px;
+}
+.genericos{
+    margin-top: 20px;
+}

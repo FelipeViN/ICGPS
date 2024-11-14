@@ -1,0 +1,49 @@
+.main-layout {
+    display: flex;
+    height: 100vh; /* Mantén el layout al 100% del alto de la pantalla */
+  }
+  
+  .sidebar {
+    width: 200px; /* Fija el ancho de la barra lateral */
+    background-color: #ffa528;
+  }
+  
+  .content {
+    flex-grow: 1; /* Ocupa todo el espacio restante después de la barra lateral */
+    padding: 20px;
+    background-color: #e6e6e6;
+    margin: 50px;
+    border-radius: 5px;
+  }
+  
+  .gridNews {
+    height: auto; /* Ajusta la altura según el contenido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .news-card {
+    text-align: justify;
+    width: 100%;
+    height: 100%;
+    border: 10px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    align-items: center;
+  }
+  
+  
+  .footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #e6e6e6;
+    margin-top: 1px;
+  }
+  .matrioshka{
+    background-color: white;
+    margin: 10px;
+    flex-grow: 1;
+    align-items: flex-end;
+  }
+  

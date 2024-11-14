@@ -1,0 +1,42 @@
+.tablaFondo{
+    margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.tabla{
+    background-color: white;
+}
+.texto{
+    color: black;
+}
+.mat-mdc-header-row{
+    background-color: #e6e6e6;
+    font-size: 18px;
+}
+.botonS{
+    background-color: #ffa528;
+    border-radius: 5px;
+    color:black;
+    margin: 20px;
+}
+.botonB{
+    background-color: red;
+    border-radius: 5px;
+    color:black;
+    margin: 20px;
+}
+.mat-mdc-form-field-focus-overlay{
+    background-color: #ffa528;
+}
+.mat-mdc-input-element mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored{
+    background-color: #ffa528;
+}
+.mat-mdc-form-field-flex{
+    background-color: #ffa528;
+}
+.mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-primary ng-tns-c508571215-1 mat-form-field-hide-placeholder{
+    background-color: #ffa528;
+}
+.mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled{
+    background-color: #ffa528;
+}

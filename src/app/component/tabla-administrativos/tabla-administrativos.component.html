@@ -1,0 +1,42 @@
+<div class="tablaFondo">
+  <mat-form-field style="margin-top: 20px;">
+    <mat-label>Filtro</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ej. departamento" #input>
+  </mat-form-field>
+  
+  <table mat-table [dataSource]="dataSource" class="tabla">
+    
+    <!-- Nombre Completo Column -->
+    <ng-container matColumnDef="nombreCompleto">
+      <th mat-header-cell *matHeaderCellDef class="texto">Nombre Completo</th>
+      <td mat-cell *matCellDef="let element" class="texto">{{element.nombreCompleto}}</td>
+    </ng-container>
+
+    <!-- Departamento Column -->
+    <ng-container matColumnDef="departamento">
+      <th mat-header-cell *matHeaderCellDef class="texto">Departamento</th>
+      <td mat-cell *matCellDef="let element" class="texto">{{element.departamento}}</td>
+    </ng-container>
+    
+    <!-- Cargo Column -->
+    <ng-container matColumnDef="cargo">
+      <th mat-header-cell *matHeaderCellDef class="texto">Cargo</th>
+      <td mat-cell *matCellDef="let element" class="texto">{{element.cargo}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="texto">Acciones</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button class="botonS" style="color:black;">Mostrar</button>
+        <button mat-button color="warn" class="botonB" style="color:black;" (click)="borrar(element.usuarioID)">Borrar</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No hay datos que coincidan con el filtro "{{input.value}}"</td>
+    </tr>
+  </table>
+</div>

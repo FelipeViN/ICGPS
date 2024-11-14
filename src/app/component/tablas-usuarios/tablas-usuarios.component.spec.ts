@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapComponent } from './map.component';
+import { TablasUsuariosComponent } from './tablas-usuarios.component';
 
-describe('MapComponent', () => {
-  let component: MapComponent;
-  let fixture: ComponentFixture<MapComponent>;
+describe('TablasSuauriosComponent', () => {
+  let component: TablasUsuariosComponent;
+  let fixture: ComponentFixture<TablasUsuariosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MapComponent]
+      imports: [TablasUsuariosComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MapComponent);
+    fixture = TestBed.createComponent(TablasUsuariosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

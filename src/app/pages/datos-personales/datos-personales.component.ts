@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ToolbarComponent } from '../../component/toolbar/toolbar.component';
 
 @Component({
   selector: 'app-datos-personales',
   standalone: true,
-  imports: [],
+  imports: [ToolbarComponent],
   templateUrl: './datos-personales.component.html',
   styleUrls: ['./datos-personales.component.css'] // Corregido de 'styleUrl' a 'styleUrls'
 })

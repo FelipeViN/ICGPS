@@ -1,73 +1,67 @@
-<!-- Sidebar -->
-<div class="main-layout">
-    <div class="sidebar">
-      <!-- Logo en la barra lateral -->
-      <img src="../../../assets/logo.jpeg" class="logo" alt="logo.jpeg">
+
+
+  <div class="main-layout"> <!-- inicial -->
+    <div class="sidebar"> <!-- sidebar -->
+      <app-toolbar></app-toolbar>
+    </div> <!-- cierre sidebar -->
   
-      <!-- Enlaces o botones de la barra lateral -->
-      <a href="#">Datos personales</a>
-      <a href="#">Alumnos</a>
-      <a href="#">Profesores</a>
-      <a href="#">Materias</a>
-      <a href="#">Grupos</a>
-      <a href="#">Mapa de la institución</a>
-      <a href="#">Credencial</a>
-      <a href="#">Inicio</a>
-      <a href="#">Cerrar sesión</a>
-    </div>
-  
-    <!-- Main content -->
-    <div class="content-container"> <!-- Ajuste de altura para toda la pantalla -->
-      <div class="main-row"> <!-- Fila principal con dos columnas -->
-  
-        <!-- Columna izquierda (Información General) -->
-        <div class="col-general">
-          <div class="card">
-            <div class="card-header">Información general</div>
-            <div class="card-body">
-              <img src="https://via.placeholder.com/100" class="profile-img" alt="Foto de perfil">
-              <div>
-                <p><strong>Nombre:</strong> {{ nombre }}</p>
-                <p><strong>CURP:</strong> {{ curp }}</p>
-                <p><strong>Fecha de nacimiento:</strong> {{ fechaNacimiento }}</p>
-                <p><strong>Género:</strong> {{ genero }}</p>
-                <p><strong>Estado civil:</strong> {{ estadoCivil }}</p>
-                <p><strong>Teléfono:</strong> {{ telefono }}</p>
-                <p><strong>Correo electrónico:</strong> {{ correoElectronico }}</p>
-                <p><strong>Nº de servicio médico:</strong> {{ servicioMedico }}</p>
+    <div class="content"> <!-- contenido -->
+      <div class="content-container"> <!-- Ajuste de altura para toda la pantalla -->
+        <div class="main-row"> <!-- Fila principal con dos columnas -->
+    
+          <!-- Columna izquierda (Información General) -->
+          <div class="col-general">
+            <div class="card">
+              <div class="card-header">Información general</div>
+              <div class="card-body">
+                <img src="https://via.placeholder.com/100" class="profile-img" alt="Foto de perfil">
+                <div>
+                  <p><strong>Nombre:</strong> {{ nombre }}</p>
+                  <p><strong>CURP:</strong> {{ curp }}</p>
+                  <p><strong>Fecha de nacimiento:</strong> {{ fechaNacimiento }}</p>
+                  <p><strong>Género:</strong> {{ genero }}</p>
+                  <p><strong>Estado civil:</strong> {{ estadoCivil }}</p>
+                  <p><strong>Teléfono:</strong> {{ telefono }}</p>
+                  <p><strong>Correo electrónico:</strong> {{ correoElectronico }}</p>
+                  <p><strong>Nº de servicio médico:</strong> {{ servicioMedico }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Columna derecha -->
+          <div class="col-info">
+            <!-- Fila 1: Información Escolar -->
+            <div class="card">
+              <div class="card-header">Información escolar</div>
+              <div class="card-body">
+                <p><strong>Nº de control:</strong> {{ numeroControl }}</p>
+                <p><strong>Estatus:</strong> {{ estatus }}</p>
+                <p><strong>Semestre:</strong> {{ semestre }}</p>
+                <p><strong>CVE Carrera:</strong> {{ cveCarrera }}</p>
+                <p><strong>Especialidad:</strong> {{ especialidad }}</p>
+                <p><strong>Plan de estudios:</strong> {{ planEstudios }}</p>
+              </div>
+            </div>
+    
+            <!-- Fila 2: Información de Contacto -->
+            <div class="card">
+              <div class="card-header">Información de contacto</div>
+              <div class="card-body">
+                <p><strong>Calle y número:</strong> {{ calleNumero }}</p>
+                <p><strong>Colonia:</strong> {{ colonia }}</p>
+                <p><strong>Código postal:</strong> {{ codigoPostal }}</p>
+                <p><strong>Municipio:</strong> {{ municipio }}</p>
+                <p><strong>Estado:</strong> {{ estado }}</p>
               </div>
             </div>
           </div>
         </div>
-  
-        <!-- Columna derecha -->
-        <div class="col-info">
-          <!-- Fila 1: Información Escolar -->
-          <div class="card">
-            <div class="card-header">Información escolar</div>
-            <div class="card-body">
-              <p><strong>Nº de control:</strong> {{ numeroControl }}</p>
-              <p><strong>Estatus:</strong> {{ estatus }}</p>
-              <p><strong>Semestre:</strong> {{ semestre }}</p>
-              <p><strong>CVE Carrera:</strong> {{ cveCarrera }}</p>
-              <p><strong>Especialidad:</strong> {{ especialidad }}</p>
-              <p><strong>Plan de estudios:</strong> {{ planEstudios }}</p>
-            </div>
-          </div>
-  
-          <!-- Fila 2: Información de Contacto -->
-          <div class="card">
-            <div class="card-header">Información de contacto</div>
-            <div class="card-body">
-              <p><strong>Calle y número:</strong> {{ calleNumero }}</p>
-              <p><strong>Colonia:</strong> {{ colonia }}</p>
-              <p><strong>Código postal:</strong> {{ codigoPostal }}</p>
-              <p><strong>Municipio:</strong> {{ municipio }}</p>
-              <p><strong>Estado:</strong> {{ estado }}</p>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
-  </div>
+    </div> <!-- cierre contenido -->
+  </div> <!-- cierre inicial -->
+  
+  <footer class="footer">
+    <p>Esta pagina fue hecha por el equipo 4</p>
+  </footer>
   

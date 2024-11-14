@@ -12,5 +12,5 @@ import { MatGridListModule } from '@angular/material/grid-list';
   styleUrl: './welcome.component.css'
 })
 export default class WelcomeComponent {
-title = 'welcome';
+title = 'bienvenida';
 }

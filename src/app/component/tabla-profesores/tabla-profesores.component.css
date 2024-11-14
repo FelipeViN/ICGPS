@@ -1,0 +1,27 @@
+.tablaFondo{
+    margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.tabla{
+    background-color: white;
+}
+.texto{
+    color: black;
+}
+.botonS{
+    background-color: #ffa528;
+    border-radius: 5px;
+    color:black;
+    margin: 20px;
+}
+.botonB{
+    background-color: red;
+    border-radius: 5px;
+    color:black;
+    margin: 20px;
+}
+.mat-mdc-header-row{
+    background-color: #e6e6e6;
+    font-size: 18px;
+}

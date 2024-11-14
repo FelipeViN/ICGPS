@@ -16,8 +16,12 @@
     margin: 20px;
 }
 .botonB{
-    background-color: #289bff;
+    background-color: red;
     border-radius: 5px;
     color:black;
     margin: 20px;
+}
+.mat-mdc-header-row{
+    background-color: #e6e6e6;
+    font-size: 18px;
 }

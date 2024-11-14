@@ -40,3 +40,50 @@
 .mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled{
     background-color: #ffa528;
 }
+.mat-mdc-paginator{
+    background-color: #e6e6e6;
+    color: black;
+}
+.mat-mdc-paginator-page-size{
+    color: black;
+}
+.mat-mdc-paginator-touch-target{
+    color: black;
+}
+.mat-mdc-select-trigger{
+    color: black;
+}
+.mat-mdc-select ng-tns-c1711764913-8{
+    color: black;
+}
+.mat-mdc-select-placeholder{
+    color: black;
+}
+/* Estiliza el mat-select dentro del paginador */
+mat-paginator .mat-select {
+    background-color: #f5f5f5; /* Fondo del select */
+    color: #333; /* Color del texto */
+    border-radius: 4px; /* Bordes redondeados */
+  }
+  
+  mat-paginator .mat-select:hover {
+    background-color: #e0e0e0; /* Color de fondo al pasar el cursor */
+  }
+  
+  mat-paginator .mat-select .mat-select-arrow {
+    color: #555; /* Cambia el color de la flecha */
+  }
+  
+  /* Estiliza las opciones del select */
+  mat-paginator .mat-select-panel .mat-option {
+    background-color: #ffffff; /* Fondo de las opciones */
+    color: #333; /* Color del texto de las opciones */
+  }
+  
+  mat-paginator .mat-select-panel .mat-option:hover {
+    background-color: #e0e0e0; /* Fondo de opción al pasar el cursor */
+  }
+  ::ng-deep mat-paginator .mat-select {
+    background-color: #f5f5f5;
+    color: #333;
+  }

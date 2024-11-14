@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,12 +18,21 @@ import { Profesores } from '../../models/profesores/profesores.model';
 @Component({
   selector: 'app-tabla-estudiantes',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule, MatPaginator],
   templateUrl: './tabla-estudiantes.component.html',
   styleUrls: ['./tabla-estudiantes.component.css']
 })
 export class TablaEstudiantesComponent implements OnInit {
   readonly dialog = inject(MatDialog);
+//Esta pequeña seccion hace que funcione el paginator
+// INICIO DE LA SECCION
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+
+  ngAfterViewInit(){
+    this.dataSource = new MatTableDataSource(this.dataSource.data);
+    this.dataSource.paginator = this.paginator;
+  }
+// FIN DE LA SECCION
 
   displayedColumns: string[] = ['matricula', 'nombre', 'email', 'semestre', 'actions'];
   dataSource = new MatTableDataSource<UsuarioEstudiante>([]);
@@ -102,6 +111,7 @@ export class TablaEstudiantesComponent implements OnInit {
 }
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'show-estudiantes',
   templateUrl: 'show-estudiantes.component.html',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,17 +6,28 @@ import { HttpClient } from '@angular/common/http';
 import { Profesores } from '../../models/profesores/profesores.model';
 import { Usuarios } from '../../models/usuarios/usuarios.model';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-tabla-profesores',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule],
   templateUrl: './tabla-profesores.component.html',
   styleUrls: ['./tabla-profesores.component.css']
 })
 export class TablaProfesoresComponent implements OnInit {
   displayedColumns: string[] = [ 'numeroEmpleado', 'nombreCompleto', 'especialidad', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
+
+  //Esta pequeña seccion hace que funcione el paginator
+// INICIO DE LA SECCION
+@ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+
+ngAfterViewInit(){
+  this.dataSource = new MatTableDataSource(this.dataSource.data);
+  this.dataSource.paginator = this.paginator;
+}
+// FIN DE LA SECCION
 
   constructor(private http: HttpClient) {}
 

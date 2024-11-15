@@ -87,3 +87,9 @@ mat-paginator .mat-select {
     background-color: #f5f5f5;
     color: #333;
   }
+  :host-context(.theme-light) h2 {
+    background-color: #eef;
+  }
+  span {
+    color: black;
+}

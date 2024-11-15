@@ -13,134 +13,63 @@
         (click)="setActiveTab('materias')">
         📘 Materias
       </button>
+      <!--
       <button 
         [class.active]="activeTab === 'horario'" 
         (click)="setActiveTab('horario')">
         🕒 Horario
       </button>
+      -->
+    </div>
+
+    <!-- Filtro de búsqueda en la esquina superior derecha -->
+    <div class="filter-container">
+      <input
+        type="text"
+        placeholder="Buscar materia..."
+        [(ngModel)]="filtro"
+        (input)="buscarMateria()"
+        class="search-box"
+      />
     </div>
 
     <!-- Vista de Materias -->
     <div *ngIf="activeTab === 'materias'" class="materias-container">
       <!-- Contenedor de tarjetas de materias -->
       <div class="materias-grid">
-        <!-- Tarjeta de materia repetida 8 veces -->
-        <div class="materia-card">
+        <!-- Tarjetas de materias -->
+        <div *ngFor="let materia of paginatedMaterias" class="materia-card" (click)="verDetalle(materia)">
           <div class="materia-icon">
-            <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
+            <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de materia" class="materia-icono" />
           </div>
           <div class="materia-info">
-            <h3 class="materia-titulo">Materia:</h3>
-            <p class="materia-detalle">Profesor:</p>
-            <p class="materia-detalle">Grupo:</p>
+            <h3 class="materia-titulo">Materia: {{ materia.nombre }}</h3>
+            <p class="materia-detalle">Profesor: {{ materia.profesor }}</p>
+            <p class="materia-detalle">Grupo: {{ materia.grupo }}</p>
             <p class="materia-detalle">Evaluación de unidades</p>
             <p class="materia-unidades">Sin unidades evaluadas aún.</p>
             <p class="materia-calificacion">Sin calificación final capturada</p>
           </div>
-          <button class="programa-btn">📄 Programa</button>
-        </div>
-        <div class="materia-card">
-          <div class="materia-icon">
-            <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
-          </div>
-          <div class="materia-info">
-            <h3 class="materia-titulo">Materia:</h3>
-            <p class="materia-detalle">Profesor:</p>
-            <p class="materia-detalle">Grupo:</p>
-            <p class="materia-detalle">Evaluación de unidades</p>
-            <p class="materia-unidades">Sin unidades evaluadas aún.</p>
-            <p class="materia-calificacion">Sin calificación final capturada</p>
-          </div>
-          <button class="programa-btn">📄 Programa</button>
-        </div>
-        <div class="materia-card">
-            <div class="materia-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
-              </div>
-              <div class="materia-info">
-                <h3 class="materia-titulo">Materia:</h3>
-                <p class="materia-detalle">Profesor:</p>
-                <p class="materia-detalle">Grupo:</p>
-                <p class="materia-detalle">Evaluación de unidades</p>
-                <p class="materia-unidades">Sin unidades evaluadas aún.</p>
-                <p class="materia-calificacion">Sin calificación final capturada</p>
-              </div>
-              <button class="programa-btn">📄 Programa</button>
-        </div>
-        <div class="materia-card">
-            <div class="materia-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
-              </div>
-              <div class="materia-info">
-                <h3 class="materia-titulo">Materia:</h3>
-                <p class="materia-detalle">Profesor:</p>
-                <p class="materia-detalle">Grupo:</p>
-                <p class="materia-detalle">Evaluación de unidades</p>
-                <p class="materia-unidades">Sin unidades evaluadas aún.</p>
-                <p class="materia-calificacion">Sin calificación final capturada</p>
-              </div>
-              <button class="programa-btn">📄 Programa</button>
-        </div>
-        <div class="materia-card">
-            <div class="materia-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
-              </div>
-              <div class="materia-info">
-                <h3 class="materia-titulo">Materia:</h3>
-                <p class="materia-detalle">Profesor:</p>
-                <p class="materia-detalle">Grupo:</p>
-                <p class="materia-detalle">Evaluación de unidades</p>
-                <p class="materia-unidades">Sin unidades evaluadas aún.</p>
-                <p class="materia-calificacion">Sin calificación final capturada</p>
-              </div>
-              <button class="programa-btn">📄 Programa</button>
-        </div>
-        <div class="materia-card">
-            <div class="materia-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
-              </div>
-              <div class="materia-info">
-                <h3 class="materia-titulo">Materia:</h3>
-                <p class="materia-detalle">Profesor:</p>
-                <p class="materia-detalle">Grupo:</p>
-                <p class="materia-detalle">Evaluación de unidades</p>
-                <p class="materia-unidades">Sin unidades evaluadas aún.</p>
-                <p class="materia-calificacion">Sin calificación final capturada</p>
-              </div>
-              <button class="programa-btn">📄 Programa</button>
-        </div>
-        <div class="materia-card">
-            <div class="materia-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
-              </div>
-              <div class="materia-info">
-                <h3 class="materia-titulo">Materia:</h3>
-                <p class="materia-detalle">Profesor:</p>
-                <p class="materia-detalle">Grupo:</p>
-                <p class="materia-detalle">Evaluación de unidades</p>
-                <p class="materia-unidades">Sin unidades evaluadas aún.</p>
-                <p class="materia-calificacion">Sin calificación final capturada</p>
-              </div>
-              <button class="programa-btn">📄 Programa</button>
-        </div>
-        <div class="materia-card">
-            <div class="materia-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de material escolar" class="materia-icono">
-              </div>
-              <div class="materia-info">
-                <h3 class="materia-titulo">Materia:</h3>
-                <p class="materia-detalle">Profesor:</p>
-                <p class="materia-detalle">Grupo:</p>
-                <p class="materia-detalle">Evaluación de unidades</p>
-                <p class="materia-unidades">Sin unidades evaluadas aún.</p>
-                <p class="materia-calificacion">Sin calificación final capturada</p>
-              </div>
-              <button class="programa-btn">📄 Programa</button>
         </div>
       </div>
     </div>
 
+    <!-- Botón para agregar una nueva materia en la parte inferior izquierda -->
+    <div class="add-button-container">
+      <button class="add-button" (click)="agregarMateria()">➕ Agregar Materia</button>
+    </div>
+
+    <!-- Barra de paginación -->
+    <mat-paginator 
+      [length]="dataSource.data.length" 
+      [pageSize]="itemsPerPage" 
+      [pageSizeOptions]="[1, 2, 3, 4, 5, 6]" 
+      aria-label="Select page" 
+      (page)="updatePaginatedMaterias()">
+    </mat-paginator>
+
     <!-- Vista de Horario -->
+    <!--
     <div *ngIf="activeTab === 'horario'" class="horario-container">
       <h2>Horario de Clases</h2>
       <table class="horario-table">
@@ -155,7 +84,6 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Filas de horario (vacías hasta que se llene el arreglo `materiasHorario`) -->
           <tr *ngFor="let materia of materiasHorario">
             <td>{{ materia.hora }}</td>
             <td>{{ materia.lunes }}</td>
@@ -167,5 +95,6 @@
         </tbody>
       </table>
     </div>
+    -->
   </div>
 </div>

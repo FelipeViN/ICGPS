@@ -1,160 +1,160 @@
 /* Layout principal */
 .main-layout {
-    display: flex;
-    height: 100vh;
-    background-color: #f5f5f5;
-  }
-  
-  /* Barra lateral */
-  .sidebar {
-    width: 200px;
-    background-color: #ffa528;
-    padding: 20px;
-    position: fixed;
-    height: 100vh;
-    display: flex;
-  }
-  
-  /* Logo */
-  .logo {
-    width: 150px;
-    margin-bottom: 20px;
-  }
-  
-  /* Contenedor de contenido */
-  .content-container {
-    margin-left: 230px;
-    padding: 20px;
-    width: calc(100% - 230px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Contenedor principal de las materias */
-  .materias-container {
-    width: 100%;
-    max-width: 1200px;
-    background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Header de Materias y Horario */
-  .materias-header {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .materias-header button {
-    background-color: #e0e0e0;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .materias-header button.active {
-    background-color: #333;
-    color: #fff;
-  }
-  
-  /* Grid de materias */
-  .materias-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Ahora 4 columnas */
-    gap: 35px;
-    width: 100%;
-  }  
-  
-  /* Tarjetas de materias */
-  .materia-card {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .materia-icono {
-    width: 40px; /* Tamaño ajustado */
-    height: 40px;
-    fill: #ffa528; /* Cambia el color si el SVG lo permite */
-  }
-  
-  .materia-titulo {
-    font-size: 1.2rem;
-    color: #ffa528; /* Color consistente con el sidebar */
-    margin: 0;
-  }
-  
-  .materia-detalle, .materia-unidades, .materia-calificacion {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 5px 0;
-  }
-  
-  .programa-btn {
-    background-color: #ffa528; /* Consistencia de color */
-    color: #fff;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    align-self: flex-start;
-    margin-top: 10px;
-  }
-  
-  /* Estilo para la vista de Horario */
-  .horario-container {
-    width: 100%;
-    max-width: 1200px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Tabla de Horario */
-  .horario-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #333;
-  }
-  
-  /* Encabezados de la tabla de horario */
-  .horario-table th {
-    background-color: #ffa528;
-    color: #fff;
-    padding: 10px;
-    font-weight: bold;
-    border: 1px solid #e0e0e0;
-  }
-  
-  /* Filas y celdas de la tabla de horario */
-  .horario-table td {
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    background-color: #fff;
-  }
-  
-  .horario-table tr:nth-child(even) td {
-    background-color: #f9f9f9;
-  }
-  
-  /* Celda de hora */
-  .horario-table td.hora {
-    font-weight: bold;
-    color: #ffa528;
-    
-  }
-  
+  display: flex;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 200px;
+  background-color: #ffa528;
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+}
+
+/* Contenedor de contenido */
+.content-container {
+  margin-left: 230px;
+  padding: 20px;
+  width: calc(100% - 230px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Contenedor principal de las materias */
+.materias-container {
+  width: 100%;
+  max-width: 1200px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header de Materias */
+.materias-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.materias-header button {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.materias-header button.active {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Filtro de búsqueda */
+.filter-container {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-box:focus {
+  border-color: #ffa528;
+  box-shadow: 0px 0px 5px rgba(255, 165, 40, 0.5);
+}
+
+/* Grid de materias */
+.materias-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 35px;
+  width: 100%;
+}
+
+/* Tarjetas de materias */
+.materia-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.materia-icono {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.materia-titulo {
+  font-size: 1.2rem;
+  color: #ffa528;
+  margin: 0;
+}
+
+.materia-detalle, .materia-unidades, .materia-calificacion {
+  font-size: 0.9rem;
+  color: #070707;
+  margin: 5px 0;
+}
+
+/* Estilo para el botón "Agregar Materia" */
+.add-button-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.add-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+/* Barra de paginación */
+mat-paginator {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-paginator .mat-mdc-paginator-page-size {
+  margin-right: 20px;
+}
+
+.mat-mdc-paginator-range-label, .mat-mdc-paginator-range-actions .mat-mdc-icon-button {
+  color: #007bff;
+}
+
+.mat-mdc-icon-button:hover {
+  background-color: #e0e0e0;
+}

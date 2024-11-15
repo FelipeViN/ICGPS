@@ -38,14 +38,14 @@
       <!-- Contenedor de tarjetas de materias -->
       <div class="materias-grid">
         <!-- Tarjetas de materias -->
-        <div *ngFor="let materia of paginatedMaterias" class="materia-card" (click)="verDetalle(materia)">
+        <div *ngFor="let materia of paginatedMaterias" class="materia-card" (click)="abrirDetalleMateria(materia)">
           <div class="materia-icon">
             <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de materia" class="materia-icono" />
           </div>
           <div class="materia-info">
-            <h3 class="materia-titulo">Materia: {{ materia.nombre }}</h3>
-            <p class="materia-detalle">Profesor: {{ materia.profesor }}</p>
-            <p class="materia-detalle">Grupo: {{ materia.grupo }}</p>
+            <h3 class="materia-titulo">Materia:</h3>
+            <p class="materia-detalle">Profesor:</p>
+            <p class="materia-detalle">Grupo:</p>
             <p class="materia-detalle">Evaluación de unidades</p>
             <p class="materia-unidades">Sin unidades evaluadas aún.</p>
             <p class="materia-calificacion">Sin calificación final capturada</p>
@@ -53,11 +53,57 @@
         </div>
       </div>
     </div>
+     
+    <!-- Modal para más información de la materia -->
+    <div class="modal-overlay" *ngIf="modalDetalleAbierto">
+      <div class="modal-content">
+        <h2>Detalles de la Materia</h2>
+        <p><strong>Nombre:</strong> {{ materiaSeleccionada?.nombre }}</p>
+        <p><strong>Profesor:</strong> {{ materiaSeleccionada?.profesor }}</p>
+        <p><strong>Semestre:</strong> {{ materiaSeleccionada?.semestre }}</p>
+        <p><strong>Grupo:</strong> {{ materiaSeleccionada?.grupo }}</p>
 
-    <!-- Botón para agregar una nueva materia en la parte inferior izquierda -->
-    <div class="add-button-container">
-      <button class="add-button" (click)="agregarMateria()">➕ Agregar Materia</button>
+        <div class="button-group">
+          <button (click)="editarMateria()">Modificar</button>
+          <button (click)="eliminarMateria()">Eliminar</button>
+          <button (click)="asignarHorario()">Asignar Horario</button>
+        </div>
+        <button class="cancel-button" (click)="cerrarModalDetalle()">Cerrar</button>
+      </div>
     </div>
+
+        <!-- Botón para agregar una nueva materia en la parte inferior izquierda -->
+        <div class="add-button-container">
+          <button class="add-button" (click)="abrirModal()">➕ Agregar Materia</button>
+        </div>
+    
+<!-- Modal para agregar materia -->
+<div class="modal-overlay" *ngIf="modalAbierto">
+  <div class="modal-content">
+    <h2>Agregar Nueva Materia</h2>
+    <form (ngSubmit)="agregarNuevaMateria()">
+      <label>
+        Nombre de la materia:
+        <input type="text" [(ngModel)]="nuevaMateria.nombre" name="nombre" required>
+      </label>
+      <label>
+        Profesor:
+        <select [(ngModel)]="nuevaMateria.profesor" name="profesor" required>
+          <option *ngFor="let profesor of profesores" [value]="profesor">
+            {{ profesor }}
+          </option>
+        </select>
+      </label>
+      <label>
+        Semestre:
+        <input type="number" [(ngModel)]="nuevaMateria.semestre" name="semestre" min="1" max="8" required>
+      </label>
+      <button type="submit" class="submit-button">Agregar</button>
+      <button type="button" class="cancel-button" (click)="cerrarModal()">Cancelar</button>
+    </form>
+  </div>
+</div>
+
 
     <!-- Barra de paginación -->
     <mat-paginator 

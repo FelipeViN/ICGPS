@@ -7,11 +7,13 @@ import { Profesores } from '../../models/profesores/profesores.model';
 import { Usuarios } from '../../models/usuarios/usuarios.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { BorrarUsuariosComponent } from '../borrar-usuarios/borrar-usuarios.component';
+import { ActualizarUsuariosComponent } from '../actualizar-usuarios/actualizar-usuarios.component';
 
 @Component({
   selector: 'app-tabla-profesores',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule, BorrarUsuariosComponent, ActualizarUsuariosComponent],
   templateUrl: './tabla-profesores.component.html',
   styleUrls: ['./tabla-profesores.component.css']
 })
@@ -45,6 +47,7 @@ ngAfterViewInit(){
           return {
             ...prof,
             usuarioID: prof.id,
+            id:profesorData?.id,
             numeroEmpleado: profesorData?.numeroEmpleado,
             especialidad: profesorData?.especialidad,
           };

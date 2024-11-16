@@ -23,7 +23,7 @@
     <mat-form-field
     style="background-color:aliceblue"
     >
-      <mat-label>Tipo de usuario</mat-label>
+      <mat-label>Semestre</mat-label>
       <mat-select formControlName="semestre">
         <mat-option value="1">1</mat-option>
         <mat-option value="2">2</mat-option>
@@ -101,7 +101,7 @@
   
 
   <mat-dialog-actions>
-    <button mat-button (click)="onSubmit()" [disabled]="alumnoForm.invalid" cdkFocusInitial style="background-color: #ffa528; border-radius: 5px; color:black; margin: 20px;">Registrar</button>
+    <button mat-button (click)="onSubmit()"  style="background-color: #ffa528; border-radius: 5px; color:black; margin: 20px;">Registrar</button>
     <button mat-button (click)="onNoClick()" style="background-color: red; border-radius: 5px; color:black; margin: 20px;">Cancelar</button>
   </mat-dialog-actions>
 </div>

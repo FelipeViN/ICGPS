@@ -14,11 +14,12 @@ import { CommonModule } from '@angular/common';
 import { MyErrorStateMatcher } from '../modal-alumnos/card-alumnos.component';
 import { Administrativos } from '../../models/administrativos/administrativos.model';
 import { Profesores } from '../../models/profesores/profesores.model';
+import { BorrarUsuariosComponent } from '../borrar-usuarios/borrar-usuarios.component';
 
 @Component({
   selector: 'app-tabla-estudiantes',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule, MatPaginator],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule, MatPaginator, BorrarUsuariosComponent, ActualizarUsuariosComponent],
   templateUrl: './tabla-estudiantes.component.html',
   styleUrls: ['./tabla-estudiantes.component.css']
 })
@@ -77,28 +78,6 @@ export class TablaEstudiantesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  borrar(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Solo procederá con la eliminación si el usuario confirma
-        const url = `http://cecyte.test/api/Usuarios/${id}`;
-        
-        this.http.get<Usuarios>(url).subscribe(usuario => {
-          const usuarioActualizado = {
-            ...usuario,
-            Estatus: 0 // Cambiar el estado del usuario a 0 (inactivo)
-          };
-
-          this.http.put(url, usuarioActualizado).subscribe(() => {
-            this.loadEstudiantes(); // Recargar la lista después de la eliminación
-          });
-        });
-      }
-    });
-  }
-
   openDialog(estudiante: UsuarioEstudiante): void {
     console.log(estudiante);
     this.dialog.open(DialogOverviewExampleDialog, {
@@ -112,6 +91,7 @@ export class TablaEstudiantesComponent implements OnInit {
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { ActualizarUsuariosComponent } from '../actualizar-usuarios/actualizar-usuarios.component';
 @Component({
   selector: 'show-estudiantes',
   templateUrl: 'show-estudiantes.component.html',
@@ -556,30 +536,6 @@ updateStudent(): void {
 })
 export class ConfirmDialogComponent {
   constructor(private dialogRef: MatDialogRef<ConfirmDialogComponent>) {}
-
-  onConfirm(): void {
-    this.dialogRef.close(true);
-  }
-
-  onCancel(): void {
-    this.dialogRef.close(false);
-  }
-}
-
-
-@Component({
-  selector: 'app-confirm-delete-dialog',
-  templateUrl: './confirm-delete.component.html',
-  standalone: true,
-  imports: [
-    MatDialogTitle,
-    MatDialogActions,
-    MatButtonModule,
-    MatDialogContent
-  ],
-})
-export class ConfirmDeleteDialogComponent {
-  constructor(private dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>) {}
 
   onConfirm(): void {
     this.dialogRef.close(true);

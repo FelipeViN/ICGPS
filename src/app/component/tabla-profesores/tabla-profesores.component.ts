@@ -36,10 +36,10 @@ ngAfterViewInit(){
   }
 
   loadProfesores(): void {
-    this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios').subscribe((usuarios) => {
+    this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Usuarios').subscribe((usuarios) => {
       const profesores = usuarios.filter(usuario => usuario.tipoUsuario === 'profesor' && usuario.Estatus === 1);
   
-      this.http.get<Profesores[]>('http://cecyte.test/api/Profesores').subscribe((profesoresData) => {
+      this.http.get<Profesores[]>('http://127.0.0.1:8000/api/Profesores').subscribe((profesoresData) => {
         const profesoresCompletos = profesores.map(prof => {
           const profesorData = profesoresData.find(p => p.usuarioID === prof.id);
           return {
@@ -61,7 +61,7 @@ ngAfterViewInit(){
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   borrar(id: number): void {
-    const url = `http://cecyte.test/api/Usuarios/${id}`;
+    const url = `http://127.0.0.1:8000/api/Usuarios/${id}`;
   
     // Obtener los datos actuales del usuario
     this.http.get<Usuarios>(url).subscribe(usuario => {

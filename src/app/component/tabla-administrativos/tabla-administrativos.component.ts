@@ -40,11 +40,11 @@ ngAfterViewInit(){
   }
 
   loadAdministrativos(): void {
-    this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios').subscribe((usuarios) => {
+    this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Usuarios').subscribe((usuarios) => {
       // Filtramos solo los usuarios con tipo 'administrativo' y Estatus 1
       const administrativos = usuarios.filter(usuario => usuario.tipoUsuario === 'secretaria' && usuario.Estatus === 1);
   
-      this.http.get<Administrativos[]>('http://cecyte.test/api/Administrativos').subscribe((administrativosData) => {
+      this.http.get<Administrativos[]>('http://127.0.0.1:8000/api/Administrativos').subscribe((administrativosData) => {
         const administrativosCompletos = administrativos.map(admin => {
           const administrativoData = administrativosData.find(a => a.usuarioID === admin.id);
           
@@ -71,7 +71,7 @@ ngAfterViewInit(){
   }
   borrar(id: number): void {
     console.log(id);
-    const url = `http://cecyte.test/api/Usuarios/${id}`;
+    const url = `http://127.0.0.1:8000/api/Usuarios/${id}`;
   
     // Obtener los datos actuales del usuario
     this.http.get<Usuarios>(url).subscribe(usuario => {

@@ -44,10 +44,10 @@ export class TablaEstudiantesComponent implements OnInit {
   }
 
   loadEstudiantes(): void {
-    this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios').subscribe((usuarios) => {
+    this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Usuarios').subscribe((usuarios) => {
       const estudiantes = usuarios.filter(usuario => usuario.tipoUsuario === 'estudiante' && usuario.Estatus === 1);
       
-      this.http.get<Estudiantes[]>('http://cecyte.test/api/Estudiantes').subscribe((estudiantesData) => {
+      this.http.get<Estudiantes[]>('http://127.0.0.1:8000/api/Estudiantes').subscribe((estudiantesData) => {
         const estudiantesCompletos: UsuarioEstudiante[] = estudiantes.map(est => {
           const estudianteData = estudiantesData.find(e => e.usuarioID === est.id);
           return {
@@ -83,7 +83,7 @@ export class TablaEstudiantesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // Solo procederá con la eliminación si el usuario confirma
-        const url = `http://cecyte.test/api/Usuarios/${id}`;
+        const url = `http://127.0.0.1:8000/api/Usuarios/${id}`;
         
         this.http.get<Usuarios>(url).subscribe(usuario => {
           const usuarioActualizado = {
@@ -167,7 +167,7 @@ updateStudent(): void {
       updatedAt: new Date().toISOString()  // Actualiza la fecha de modificación
     };
 
-    this.http.put(`http://cecyte.test/api/Usuarios/${this.data.id}`, updatedData).subscribe({
+    this.http.put(`http://127.0.0.1:8000/api/Usuarios/${this.data.id}`, updatedData).subscribe({
       next: () => {
         alert('Datos actualizados con éxito');
         this.dialogRef.close(updatedData);  // Cierra el modal y pasa los datos actualizados
@@ -441,7 +441,7 @@ updateStudent(): void {
           };
   
           // Realizamos la solicitud PUT para actualizar los datos del usuario
-          this.http.put<Usuarios>(`http://cecyte.test/api/Usuarios/${this.data.usuarioID}`, usuario).subscribe({
+          this.http.put<Usuarios>(`http://127.0.0.1:8000/api/Usuarios/${this.data.usuarioID}`, usuario).subscribe({
             next: () => {
               if (this.alumnoForm.value.tipoUsuario === 'estudiante') {
                 this.updateEstudiante(this.data.id);  // Pasamos usuarioID en lugar de id
@@ -492,7 +492,7 @@ updateStudent(): void {
       updatedAt: new Date().toISOString()
     };
   
-    this.http.put<Estudiantes>(`http://cecyte.test/api/Estudiantes/${this.data.estudianteId}`, estudiante).subscribe({
+    this.http.put<Estudiantes>(`http://127.0.0.1:8000/api/Estudiantes/${this.data.estudianteId}`, estudiante).subscribe({
       next: () => {
         alert('Estudiante actualizado con éxito');
         this.dialogRef.close();
@@ -512,7 +512,7 @@ updateStudent(): void {
       updatedAt: new Date().toISOString()  // Actualizar la fecha de modificación
     };
   
-    this.http.put<Profesores>(`http://cecyte.test/api/Profesores/${this.data.profesorId}`, profesor).subscribe({
+    this.http.put<Profesores>(`http://127.0.0.1:8000/api/Profesores/${this.data.profesorId}`, profesor).subscribe({
       next: () => {
         alert('Profesor actualizado con éxito');
         this.dialogRef.close();
@@ -531,7 +531,7 @@ updateStudent(): void {
       updatedAt: new Date().toISOString()  // Actualizar la fecha de modificación
     };
   
-    this.http.put<Administrativos>(`http://cecyte.test/api/Administrativos/${this.data.administrativoId}`, administrativo).subscribe({
+    this.http.put<Administrativos>(`http://127.0.0.1:8000/api/Administrativos/${this.data.administrativoId}`, administrativo).subscribe({
       next: () => {
         alert('Administrativo actualizado con éxito');
         this.dialogRef.close();

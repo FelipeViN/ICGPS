@@ -375,7 +375,7 @@ export class DialogOverviewExampleDialog {
             updatedAt: new Date().toISOString(),
           };
   
-          this.http.post<Usuarios>('http://cecyte.test/api/Usuarios', usuario).subscribe({
+          this.http.post<Usuarios>('http://127.0.0.1:8000/api/Usuarios', usuario).subscribe({
             next: (usuarioCreado) => {
               if (this.alumnoForm.value.tipoUsuario === 'estudiante') {
                 this.registerEstudiante(usuarioCreado.id);
@@ -426,7 +426,7 @@ private registerEstudiante(usuarioID: number) {
     updatedAt: new Date().toISOString(),
   };
 console.log(estudiante);
-  this.http.post<Estudiantes>('http://cecyte.test/api/Estudiantes', estudiante).subscribe({
+  this.http.post<Estudiantes>('http://127.0.0.1:8000/api/Estudiantes', estudiante).subscribe({
     next: () => {
       alert('Estudiante registrado con éxito');
       this.dialogRef.close();
@@ -445,7 +445,7 @@ private registerProfesor(usuarioID: number) {
     updatedAt: new Date().toISOString(),
   };
 
-  this.http.post<Profesores>('http://cecyte.test/api/Profesores', profesor).subscribe({
+  this.http.post<Profesores>('http://127.0.0.1:8000/api/Profesores', profesor).subscribe({
     next: () => {
       alert('Profesor registrado con éxito');
       this.dialogRef.close();
@@ -464,7 +464,7 @@ private registerAdministrativo(usuarioID: number) {
     updatedAt: new Date().toISOString(),
   };
 
-  this.http.post<Administrativos>('http://cecyte.test/api/Administrativos', administrativo).subscribe({
+  this.http.post<Administrativos>('http://127.0.0.1:8000/api/Administrativos', administrativo).subscribe({
     next: () => {
       alert('Administrativo registrado con éxito');
       this.dialogRef.close();

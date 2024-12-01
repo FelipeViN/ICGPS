@@ -27,15 +27,15 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
   cargarUsuarios(): Observable<Usuarios[]> {
-    return this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios');
+    return this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Usuarios');
   }
   cargarEstudiantes(): Observable<Usuarios[]> {
-    return this.http.get<Usuarios[]>('http://cecyte.test/api/Estudiantes');
+    return this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Estudiantes');
   }
   cargarProfesores(): Observable<Usuarios[]> {
-    return this.http.get<Usuarios[]>('http://cecyte.test/api/Profesores');
+    return this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Profesores');
   }
   cargarSecretarias(): Observable<Usuarios[]> {
-    return this.http.get<Usuarios[]>('http://cecyte.test/api/Administrativos');
+    return this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Administrativos');
   }
 }

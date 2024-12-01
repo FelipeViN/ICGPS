@@ -527,7 +527,7 @@ export class DialogOverviewExampleDialog {
       creationAt: this.data.estudianteCreationAt,
       updatedAt: new Date().toISOString(),
     };
-
+// Realizamos la solicitud PUT para actualizar los datos del estudiante
     this.http
       .put<Estudiantes>(
         `http://cecyte.test/api/Estudiantes/${this.data.estudianteId}`,

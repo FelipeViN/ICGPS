@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
   // obteniendo a los usuarios de la api, el "get" indica el tipo de metodo http
   // el link es literalmente el link de la api
   loadUsers(): Observable<Usuarios[]> {
-    return this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Usuarios');
+    return this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios');
   }
 
   //metodo ts que usaremos en la Interfaz de Usuario

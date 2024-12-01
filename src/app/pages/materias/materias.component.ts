@@ -108,28 +108,68 @@ export default class MateriasComponent implements AfterViewInit, OnInit {
   }
 
   agregarNuevaMateria(): void {
-    // Verifica que todos los campos estén completos
-    if (!this.nuevaMateria.nombre || !this.nuevaMateria.clave || !this.nuevaMateria.creditos || !this.nuevaMateria.semestre) {
-      console.error('Faltan campos requeridos');
-      return;
-    }
-  
-    // Realiza la solicitud POST para agregar la materia
+    console.log('Datos enviados:', this.nuevaMateria);
     this.http.post<any>(this.apiUrl, this.nuevaMateria).subscribe(
       (response) => {
-        console.log('Materia agregada:', response);  // Puedes ver la respuesta aquí
-        // Si la respuesta es exitosa, agrega la nueva materia al array y actualiza la vista
+        console.log('Materia agregada:', response);
         this.materias.push(response.data);
-        this.dataSource.data = this.materias; // Actualiza los datos de la tabla
-        this.updatePaginatedMaterias();  // Actualiza las materias paginadas
-        this.cerrarModal();  // Cierra el modal después de agregar
+        this.dataSource.data = this.materias;
+        this.updatePaginatedMaterias();
+        this.cerrarModal();
       },
       (error) => {
-        console.error('Error al agregar materia:', error);  // Si ocurre un error, lo mostramos
+        console.error('Error al agregar materia:', error);
         alert('Hubo un problema al agregar la materia. Intenta nuevamente.');
       }
     );
   }
+ abrirModalEditar(materia: Materia | null): void {
+    if (!materia) {
+      console.error('No hay materia seleccionada para editar.');
+      return;
+    }
+  
+    this.nuevaMateria = { ...materia }; // Clonar los datos de la materia seleccionada
+    this.modalAbierto = true; // Abrir el modal
+  }
+  guardarMateria(): void {
+    if (this.nuevaMateria.id) {
+      // Actualizar materia existente
+      this.http.put(`${this.apiUrl}/${this.nuevaMateria.id}`, this.nuevaMateria).subscribe(
+        (response) => {
+          console.log('Materia actualizada:', response);
+          const index = this.materias.findIndex((m) => m.id === this.nuevaMateria.id);
+          if (index !== -1) {
+            this.materias[index] = this.nuevaMateria;
+          }
+          this.dataSource.data = this.materias;
+          this.updatePaginatedMaterias();
+          this.cerrarModal();
+        },
+        (error) => {
+          console.error('Error al actualizar materia:', error);
+          alert('Hubo un problema al actualizar la materia. Intenta nuevamente.');
+        }
+      );
+    } else {
+      // Agregar nueva materia
+      this.http.post<any>(this.apiUrl, this.nuevaMateria).subscribe(
+        (response) => {
+          console.log('Materia agregada:', response);
+          this.materias.push(response.data);
+          this.dataSource.data = this.materias;
+          this.updatePaginatedMaterias();
+          this.cerrarModal();
+        },
+        (error) => {
+          console.error('Error al agregar materia:', error);
+          alert('Hubo un problema al agregar la materia. Intenta nuevamente.');
+        }
+      );
+    }
+  }
+  
+  
   
 
   // Abrir detalles de una materia

@@ -49,10 +49,9 @@
         <p><strong>Nombre:</strong> {{ materiaSeleccionada?.nombre }}</p>
         <p><strong>Profesor:</strong> {{ materiaSeleccionada?.clave }}</p>
         <p><strong>Semestre:</strong> {{ materiaSeleccionada?.semestre }}</p>
-        <p><strong>Grupo:</strong> {{ materiaSeleccionada?.grupo }}</p>
-
+        <p><strong>Creditos:</strong> {{ materiaSeleccionada?.creditos }}</p>
         <div class="button-group">
-          <button (click)="editarMateria()">Modificar</button>
+          <button *ngIf="materiaSeleccionada" (click)="this['abrirModalEditar'](materiaSeleccionada)">Modificar</button>
           <button (click)="eliminarMateria()">Eliminar</button>
           <button (click)="asignarHorario()">Asignar Horario</button>
         </div>
@@ -69,8 +68,8 @@
 <!-- Modal para agregar materia -->
 <div class="modal-overlay" *ngIf="modalAbierto">
   <div class="modal-content">
-    <h2>Agregar Nueva Materia</h2>
-    <form (ngSubmit)="agregarNuevaMateria()">
+    <h2>{{ nuevaMateria.id ? 'Editar Materia' : 'Agregar Nueva Materia' }}</h2>
+    <form (ngSubmit)="this['guardarMateria']()">
       <label>
         Nombre de la materia:
         <input type="text" [(ngModel)]="nuevaMateria.nombre" name="nombre" required>
@@ -88,11 +87,14 @@
         <input type="number" [(ngModel)]="nuevaMateria.creditos" name="creditos" min="1" max="10" required>
       </label>
 
-      <button type="submit" class="submit-button">Agregar</button>
+      <button type="submit" class="submit-button">
+        {{ nuevaMateria.id ? 'Actualizar' : 'Agregar' }}
+      </button>
       <button type="button" class="cancel-button" (click)="cerrarModal()">Cancelar</button>
     </form>
   </div>
 </div>
+
 
     <div style="margin-bottom: 8px;"></div>
     <!-- Barra de paginación -->

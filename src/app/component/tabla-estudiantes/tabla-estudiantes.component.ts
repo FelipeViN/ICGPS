@@ -73,31 +73,6 @@ export class TablaEstudiantesComponent implements OnInit {
   }
 
   loadEstudiantes(): void {
-<<<<<<< HEAD
-    this.http.get<Usuarios[]>('http://127.0.0.1:8000/api/Usuarios').subscribe((usuarios) => {
-      const estudiantes = usuarios.filter(usuario => usuario.tipoUsuario === 'estudiante' && usuario.Estatus === 1);
-      
-      this.http.get<Estudiantes[]>('http://127.0.0.1:8000/api/Estudiantes').subscribe((estudiantesData) => {
-        const estudiantesCompletos: UsuarioEstudiante[] = estudiantes.map(est => {
-          const estudianteData = estudiantesData.find(e => e.usuarioID === est.id);
-          return {
-            id: estudianteData?.id || 0,               // ID específico del estudiante, con 0 como valor predeterminado
-            usuarioID: est.id,                         // ID del usuario en Usuarios
-            nombre: est.nombre,
-            apellidoPaterno: est.apellidoPaterno,
-            apellidoMaterno: est.apellidoMaterno,
-            email: est.email,
-            tipoUsuario: est.tipoUsuario,
-            Estatus: est.Estatus,
-            matricula: estudianteData?.matricula,      // Matricula opcional
-            semestre: estudianteData?.semestre,        // Semestre opcional
-            creationAt: est.creationAt,                // Fecha de creación
-            updatedAt: est.updatedAt                   // Última fecha de modificación
-          };
-        });
-  
-        this.dataSource.data = estudiantesCompletos;
-=======
     this.http
       .get<Usuarios[]>('http://cecyte.test/api/Usuarios')
       .subscribe((usuarios) => {
@@ -133,7 +108,6 @@ export class TablaEstudiantesComponent implements OnInit {
 
             this.dataSource.data = estudiantesCompletos;
           });
->>>>>>> 8565efe9ec3a082a1ae2510990eeb29b984720e6
       });
   }
 
@@ -142,31 +116,6 @@ export class TablaEstudiantesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-<<<<<<< HEAD
-  borrar(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Solo procederá con la eliminación si el usuario confirma
-        const url = `http://127.0.0.1:8000/api/Usuarios/${id}`;
-        
-        this.http.get<Usuarios>(url).subscribe(usuario => {
-          const usuarioActualizado = {
-            ...usuario,
-            Estatus: 0 // Cambiar el estado del usuario a 0 (inactivo)
-          };
-
-          this.http.put(url, usuarioActualizado).subscribe(() => {
-            this.loadEstudiantes(); // Recargar la lista después de la eliminación
-          });
-        });
-      }
-    });
-  }
-
-=======
->>>>>>> 8565efe9ec3a082a1ae2510990eeb29b984720e6
   openDialog(estudiante: UsuarioEstudiante): void {
     console.log(estudiante);
     this.dialog.open(DialogOverviewExampleDialog, {
@@ -236,17 +185,6 @@ export class DialogOverviewExampleDialog {
         updatedAt: new Date().toISOString(), // Actualiza la fecha de modificación
       };
 
-<<<<<<< HEAD
-    this.http.put(`http://127.0.0.1:8000/api/Usuarios/${this.data.id}`, updatedData).subscribe({
-      next: () => {
-        alert('Datos actualizados con éxito');
-        this.dialogRef.close(updatedData);  // Cierra el modal y pasa los datos actualizados
-      },
-      error: () => alert('Error al actualizar los datos')
-    });
-  } else {
-    alert('Por favor, completa todos los campos correctamente');
-=======
       this.http
         .put(`http://cecyte.test/api/Usuarios/${this.data.id}`, updatedData)
         .subscribe({
@@ -259,7 +197,6 @@ export class DialogOverviewExampleDialog {
     } else {
       alert('Por favor, completa todos los campos correctamente');
     }
->>>>>>> 8565efe9ec3a082a1ae2510990eeb29b984720e6
   }
 
   ngOnInit() {
@@ -530,20 +467,6 @@ export class DialogOverviewExampleDialog {
           };
 
           // Realizamos la solicitud PUT para actualizar los datos del usuario
-<<<<<<< HEAD
-          this.http.put<Usuarios>(`http://127.0.0.1:8000/api/Usuarios/${this.data.usuarioID}`, usuario).subscribe({
-            next: () => {
-              if (this.alumnoForm.value.tipoUsuario === 'estudiante') {
-                this.updateEstudiante(this.data.id);  // Pasamos usuarioID en lugar de id
-              } else if (this.alumnoForm.value.tipoUsuario === 'profesor') {
-                this.updateProfesor(this.data.id);  // Pasamos usuarioID en lugar de id
-              } else if (this.alumnoForm.value.tipoUsuario === 'secretaria') {
-                this.updateAdministrativo(this.data.id);  // Pasamos usuarioID en lugar de id
-              }
-            },
-            error: () => alert('Error al actualizar los datos del usuario'),
-          });
-=======
           this.http
             .put<Usuarios>(
               `http://cecyte.test/api/Usuarios/${this.data.usuarioID}`,
@@ -561,7 +484,6 @@ export class DialogOverviewExampleDialog {
               },
               error: () => alert('Error al actualizar los datos del usuario'),
             });
->>>>>>> 8565efe9ec3a082a1ae2510990eeb29b984720e6
         }
       });
     } else {
@@ -618,7 +540,6 @@ export class DialogOverviewExampleDialog {
         },
         error: () => alert('Error al actualizar los datos del estudiante'),
       });
->>>>>>> 8565efe9ec3a082a1ae2510990eeb29b984720e6
   }
 
   private updateProfesor(usuarioID: number): void {
@@ -630,16 +551,6 @@ export class DialogOverviewExampleDialog {
       creationAt: this.data.profesorCreationAt, // Mantener la fecha de creación
       updatedAt: new Date().toISOString(), // Actualizar la fecha de modificación
     };
-<<<<<<< HEAD
-  
-    this.http.put<Profesores>(`http://127.0.0.1:8000/api/Profesores/${this.data.profesorId}`, profesor).subscribe({
-      next: () => {
-        alert('Profesor actualizado con éxito');
-        this.dialogRef.close();
-      },
-      error: () => alert('Error al actualizar los datos del profesor'),
-    });
-=======
 
     this.http
       .put<Profesores>(
@@ -653,7 +564,6 @@ export class DialogOverviewExampleDialog {
         },
         error: () => alert('Error al actualizar los datos del profesor'),
       });
->>>>>>> 8565efe9ec3a082a1ae2510990eeb29b984720e6
   }
 
   private updateAdministrativo(usuarioID: number): void {
@@ -665,16 +575,6 @@ export class DialogOverviewExampleDialog {
       creationAt: this.data.administrativoCreationAt, // Mantener la fecha de creación
       updatedAt: new Date().toISOString(), // Actualizar la fecha de modificación
     };
-<<<<<<< HEAD
-  
-    this.http.put<Administrativos>(`http://127.0.0.1:8000/api/Administrativos/${this.data.administrativoId}`, administrativo).subscribe({
-      next: () => {
-        alert('Administrativo actualizado con éxito');
-        this.dialogRef.close();
-      },
-      error: () => alert('Error al actualizar los datos del administrativo'),
-    });
-=======
 
     this.http
       .put<Administrativos>(
@@ -688,7 +588,6 @@ export class DialogOverviewExampleDialog {
         },
         error: () => alert('Error al actualizar los datos del administrativo'),
       });
->>>>>>> 8565efe9ec3a082a1ae2510990eeb29b984720e6
   }
 }
 

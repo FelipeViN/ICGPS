@@ -33,6 +33,7 @@ interface Materia {
   styleUrls: ['./materias.component.css'],
 })
 export default class MateriasComponent implements AfterViewInit, OnInit {
+[x: string]: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   dataSource = new MatTableDataSource<Materia>([]); // Fuente de datos para el paginador

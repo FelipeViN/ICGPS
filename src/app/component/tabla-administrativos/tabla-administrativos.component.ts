@@ -7,6 +7,8 @@ import { Administrativos } from '../../models/administrativos/administrativos.mo
 import { Usuarios } from '../../models/usuarios/usuarios.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { BorrarUsuariosComponent } from '../borrar-usuarios/borrar-usuarios.component';
+import { ActualizarUsuariosComponent } from '../actualizar-usuarios/actualizar-usuarios.component';
 
 interface AdministrativoCompleto extends Administrativos {
   nombreCompleto: string;
@@ -15,7 +17,7 @@ interface AdministrativoCompleto extends Administrativos {
 @Component({
   selector: 'app-tabla-administrativos',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatPaginatorModule, BorrarUsuariosComponent, ActualizarUsuariosComponent],
   templateUrl: './tabla-administrativos.component.html',
   styleUrls: ['./tabla-administrativos.component.css']
 })

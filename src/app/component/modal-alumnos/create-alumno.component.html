@@ -20,11 +20,19 @@
         <input matInput formControlName="matricula" (input)="allowOnlyNumbers($event)" maxlength="14" required />
         <mat-error *ngIf="matriculaError">{{ matriculaError }}</mat-error>
       </mat-form-field>
-      <mat-form-field style="margin-left: 10px;">
-        <mat-label>Semestre</mat-label>
-        <input matInput formControlName="semestre" required type="number" />
-        <mat-error *ngIf="alumnoForm.get('semestre')?.hasError('pattern')">Solo números positivos</mat-error>
-      </mat-form-field>
+    <mat-form-field
+    style="background-color:aliceblue"
+    >
+      <mat-label>Semestre</mat-label>
+      <mat-select formControlName="semestre">
+        <mat-option value="1">1</mat-option>
+        <mat-option value="2">2</mat-option>
+        <mat-option value="3">3</mat-option>
+        <mat-option value="4">4</mat-option>
+        <mat-option value="5">5</mat-option>
+        <mat-option value="6">6</mat-option> 
+      </mat-select>
+    </mat-form-field>
     </div>
 
     <!-- Campos específicos para Profesor -->
@@ -93,7 +101,7 @@
   
 
   <mat-dialog-actions>
-    <button mat-button (click)="onSubmit()" [disabled]="alumnoForm.invalid" cdkFocusInitial style="background-color: #ffa528; border-radius: 5px; color:black; margin: 20px;">Registrar</button>
+    <button mat-button (click)="onSubmit()"  style="background-color: #ffa528; border-radius: 5px; color:black; margin: 20px;">Registrar</button>
     <button mat-button (click)="onNoClick()" style="background-color: red; border-radius: 5px; color:black; margin: 20px;">Cancelar</button>
   </mat-dialog-actions>
 </div>

@@ -90,6 +90,9 @@ mat-paginator .mat-select {
   :host-context(.theme-light) h2 {
     background-color: #eef;
   }
-  span {
-    color: black;
+.mat-mdc-option mdc-list-item .ng-tns-c1711764913-8 .ng-star-inserted{
+    background-color: white;
+}
+.cdk-overlay-pane mat-mdc-select-panel-above {
+    background-color: orange;
 }

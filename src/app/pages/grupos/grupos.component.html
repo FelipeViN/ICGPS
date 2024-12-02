@@ -1,1 +1,56 @@
-<p>grupos works!</p>
+<div class="main-layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <app-toolbar></app-toolbar>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="container">
+    <h2>Gestión de Grupos</h2>
+
+    <!-- Barra de búsqueda -->
+    <input type="text" placeholder="Buscar grupo..." [(ngModel)]="searchQuery" (input)="filterGrupos()" />
+
+    <!-- Botón para agregar -->
+    <button (click)="openAgregarGrupoForm()">Agregar Grupo</button>
+
+    <!-- Tabla de grupos -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Semestre</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let grupo of grupos">
+          <td>{{ grupo.id }}</td>
+          <td>{{ grupo.nombre }}</td>
+          <td>{{ grupo.semestre }}</td>
+          <td>
+            <button (click)="editarGrupo(grupo)">Editar</button>
+            <button *ngIf="grupo.id !== null" (click)="eliminarGrupo(grupo.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Formulario de edición/agregar con superposición -->
+  <div class="overlay" *ngIf="mostrarFormulario" (click)="cerrarFormulario()"></div>
+  <div class="form-container" *ngIf="mostrarFormulario">
+    <h3>{{ isEditMode ? 'Editar Grupo' : 'Agregar Grupo' }}</h3>
+    <form [formGroup]="grupoForm" (ngSubmit)="guardarGrupo()">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" formControlName="nombre" />
+      <label for="semestre">Semestre</label>
+      <input type="number" id="semestre" formControlName="semestre" min="1" max="6" />
+      <label for="cicloEscolar">Ciclo Escolar</label>
+      <input type="text" id="cicloEscolar" formControlName="cicloEscolar" />
+      <button type="submit">{{ isEditMode ? 'Actualizar' : 'Guardar' }}</button>
+      <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+    </form>
+  </div>
+</div>

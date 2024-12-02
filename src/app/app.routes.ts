@@ -7,7 +7,11 @@ export const routes: Routes = [
     {path: 'usuarios', loadComponent:()=>import('./pages/alumnos/alumnos.component')},
     {path: 'profesores', loadComponent:()=>import('./pages/profesores/profesores.component')},
     {path: 'materias', loadComponent:()=>import('./pages/materias/materias.component')},
-    {path: 'grupos', loadComponent:()=>import('./pages/grupos/grupos.component')},
+    //{path: 'grupos', loadComponent:()=>import('./pages/grupos/grupos.component')},
+    { 
+        path: 'grupos', 
+        loadComponent: () => import('./pages/grupos/grupos.component').then(m => m.GruposComponent)
+      },
     {path: 'mapa', loadComponent:()=>import('./pages/mapa/mapa.component')},
     {path: 'credencial', loadComponent:()=>import('./pages/credencial/credencial.component')},
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},

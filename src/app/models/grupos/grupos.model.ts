@@ -1,8 +1,8 @@
 export interface Grupos {
-    id:number;
-    nombre: string;
-    cicloEscolar: string;
-    creationAt: string;
-    updatedAt: string;
-  }
-  
+  id: number | null;
+  nombre: string;
+  semestre: number;
+  cicloEscolar: string;
+  creationAt: string;
+  updatedAt: string;
+}

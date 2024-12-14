@@ -6,7 +6,7 @@
 
   <!-- Contenedor principal -->
   <div class="container">
-    <h2>Gestión de Grupos</h2>
+    <h2>Grupos</h2>
 
     <!-- Barra de búsqueda -->
     <input type="text" placeholder="Buscar grupo..." [(ngModel)]="searchQuery" (input)="filterGrupos()" />
@@ -31,7 +31,8 @@
           <td>{{ grupo.semestre }}</td>
           <td>
             <button (click)="editarGrupo(grupo)">Editar</button>
-            <button *ngIf="grupo.id !== null" (click)="eliminarGrupo(grupo.id)">Eliminar</button>
+            <button *ngIf="grupo.id !== null" (click)="eliminarGrupo(grupo.id)">Borrar</button>
+            <button (click)="verEstudiantes(grupo)">Ver Estudiantes</button>
           </td>
         </tr>
       </tbody>
@@ -43,14 +44,39 @@
   <div class="form-container" *ngIf="mostrarFormulario">
     <h3>{{ isEditMode ? 'Editar Grupo' : 'Agregar Grupo' }}</h3>
     <form [formGroup]="grupoForm" (ngSubmit)="guardarGrupo()">
-      <label for="nombre">Nombre</label>
+      <label for="nombre">Nombre*</label>
       <input type="text" id="nombre" formControlName="nombre" />
-      <label for="semestre">Semestre</label>
+      <div *ngIf="grupoForm.get('nombre')?.touched && grupoForm.get('nombre')?.invalid">
+        <small *ngIf="grupoForm.get('nombre')?.hasError('required')">El nombre es obligatorio</small>
+        <small *ngIf="grupoForm.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 3 caracteres</small>
+      </div>
+
+      <label for="semestre">Semestre*</label>
       <input type="number" id="semestre" formControlName="semestre" min="1" max="6" />
-      <label for="cicloEscolar">Ciclo Escolar</label>
-      <input type="text" id="cicloEscolar" formControlName="cicloEscolar" />
-      <button type="submit">{{ isEditMode ? 'Actualizar' : 'Guardar' }}</button>
+      <div *ngIf="grupoForm.get('semestre')?.touched && grupoForm.get('semestre')?.invalid">
+        <small *ngIf="grupoForm.get('semestre')?.hasError('required')">El semestre es obligatorio </small>
+        <small *ngIf="grupoForm.get('semestre')?.hasError('min')">El semestre debe ser mayor o igual a 1</small>
+        <small *ngIf="grupoForm.get('semestre')?.hasError('max')">El semestre debe ser menor o igual a 6</small>
+      </div>
+
+      <label for="cicloEscolar">Ciclo Escolar*</label>
+<input type="text" id="cicloEscolar" formControlName="cicloEscolar" />
+<div *ngIf="grupoForm.get('cicloEscolar')?.touched && grupoForm.get('cicloEscolar')?.invalid">
+  <small *ngIf="grupoForm.get('cicloEscolar')?.hasError('required')">El ciclo escolar es obligatorio</small>
+  <small *ngIf="grupoForm.get('cicloEscolar')?.hasError('invalidFormat')">El formato debe ser "Agosto-Diciembre 2024"</small>
+  <small *ngIf="grupoForm.get('cicloEscolar')?.hasError('yearTooFar')">El ciclo escolar no puede ser posterior al siguiente año</small>
+</div>
+
+      <button type="submit" [disabled]="grupoForm.invalid">{{ isEditMode ? 'Actualizar' : 'Guardar' }}</button>
       <button type="button" (click)="cerrarFormulario()">Cancelar</button>
     </form>
+  </div>
+  <!-- Componente EstudiantesGrupo -->
+  <div *ngIf="mostrarVistaEstudiantes">
+    <app-estudiantes-grupo
+      [estudiantes]="estudiantes"
+      [grupoId]="grupoSeleccionado?.id || 0"
+    ></app-estudiantes-grupo>
+    <button (click)="volverALista()">Volver</button>
   </div>
 </div>

@@ -1,0 +1,91 @@
+<div>
+  <h3>Estudiantes del Grupo {{ grupoId }}</h3>
+
+  <!-- Students Table -->
+  <table class="table table-striped" *ngIf="estudiantes.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Matrícula</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantes">
+        <td>{{ estudiante.id }}</td>
+        <td>{{ estudiante.nombre }}</td>
+        <td>{{ estudiante.matricula }}</td>
+        <td>{{ estudiante.correo }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="abrirModal(estudiante)">
+            Subir Calificación
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- No Data Message -->
+  <ng-template #noData>
+    <p>No hay estudiantes en este grupo.</p>
+  </ng-template>
+
+  <!-- Modal for Uploading Grades -->
+  <div
+    class="modal"
+    [class.show]="modalCalificacionesVisible"
+    tabindex="-1"
+    role="dialog"
+    [style.display]="modalCalificacionesVisible ? 'block' : 'none'"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Subir Calificación para {{ estudianteSeleccionado?.nombre }}</h5>
+          <button type="button" class="close" aria-label="Close" (click)="cerrarModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="calificacionForm">
+            <div class="form-group">
+              <label for="primera_evaluacion">1ra Evaluación</label>
+              <input
+                type="number"
+                id="primera_evaluacion"
+                class="form-control"
+                formControlName="primera_evaluacion"
+              />
+            </div>
+            <div class="form-group">
+              <label for="segunda_evaluacion">2da Evaluación</label>
+              <input
+                type="number"
+                id="segunda_evaluacion"
+                class="form-control"
+                formControlName="segunda_evaluacion"
+              />
+            </div>
+            <div class="form-group">
+              <label for="evaluacion_final">Evaluación Final</label>
+              <input
+                type="number"
+                id="evaluacion_final"
+                class="form-control"
+                formControlName="evaluacion_final"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="guardarCalificacion()">
+            Guardar Calificación
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

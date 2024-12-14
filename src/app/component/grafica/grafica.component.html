@@ -1,0 +1,15 @@
+<div>
+    <mat-form-field appearance="fill">
+      <mat-label>Selecciona una Materia</mat-label>
+      <mat-select [(value)]="selectedMateriaID" (selectionChange)="onMateriaChange()">
+        <mat-option *ngFor="let materia of materias" [value]="materia.id">
+          {{ materia.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div style="width: 80%; margin: 0 auto; margin-top: 20px;">
+    <canvas id="myChart"></canvas>
+  </div>
+  

@@ -13,7 +13,7 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/grupos/grupos.component').then(m => m.GruposComponent)
       },
     {path: 'mapa', loadComponent:()=>import('./pages/mapa/mapa.component')},
-    {path: 'credencial', loadComponent:()=>import('./pages/credencial/credencial.component')},
+    {path: 'reportes', loadComponent:()=>import('./pages/reporte/reporte.component')},
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
     { path: '**', redirectTo: '/iniciar-sesion' }
 ];

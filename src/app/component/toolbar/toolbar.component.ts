@@ -52,6 +52,6 @@ export class ToolbarComponent implements OnInit{
     window.location.href = '/mapa';
   }
   irCredencial(){
-    window.location.href = '/credencial';
+    window.location.href = '/reportes';
   }
 }

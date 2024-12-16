@@ -53,4 +53,6 @@
     margin-left: 200px; /* Desplaza el main a la derecha de la barra lateral */
     flex-grow: 1;       /* Permite que ocupe todo el espacio restante */
   }
-  
+  ::ng-deep .mdc-text-field.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #e8ac5d !important;
+  }

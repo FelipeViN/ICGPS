@@ -1,11 +1,14 @@
 .main-layout {
     display: flex;
-    height: 100vh; /* Mantén el layout al 100% del alto de la pantalla */
+    height: 100%; /* Mantén el layout al 100% del alto de la pantalla */
   }
   
   .sidebar {
     width: 200px; /* Fija el ancho de la barra lateral */
     background-color: #ffa528;
+    min-height: 100%; /* Fija el alto mínimo de la barra lateral */
+    height: 100%;
+    position: fixed;
   }
   
   .content {
@@ -45,5 +48,9 @@
     margin: 10px;
     flex-grow: 1;
     align-items: flex-end;
+  }
+  main {
+    margin-left: 200px; /* Desplaza el main a la derecha de la barra lateral */
+    flex-grow: 1;       /* Permite que ocupe todo el espacio restante */
   }
   

@@ -1,86 +1,93 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
-import { Calificaciones } from '../../models/calificaciones/calificaciones.model'; 
-import { Estudiantes } from '../../models/estudiantes/estudiantes.model'; 
-import { Usuarios } from '../../models/usuarios/usuarios.model'; 
+import { Calificaciones } from '../../models/calificaciones/calificaciones.model';
+import { Usuarios } from '../../models/usuarios/usuarios.model';
+import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { CommonModule } from '@angular/common';
+import { Materias } from '../../models/materias/materias.model';
+import { ReportePDFComponent } from "../reporte/reportePDF.component";
 
 @Component({
   selector: 'app-grafica',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatOptionModule
-
-  ],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatOptionModule, ReportePDFComponent],
   templateUrl: './grafica.component.html',
-  styleUrl: './grafica.component.css'
+  styleUrl: './grafica.component.css',
 })
 export class GraficaComponent implements OnInit {
   chart: any;
-  materias: { id: number; nombre: string }[] = [];
-  selectedMateriaID: number | null = null;
+  estudiantes: Usuarios[] = [];
+  materias: Materias[] = [];
+  selectedEstudianteID: number | null = null;
 
   constructor(private http: HttpClient) {
-    Chart.register(...registerables); // Registrar todos los módulos necesarios
+    Chart.register(...registerables);
   }
 
   ngOnInit(): void {
+    this.loadEstudiantes();
     this.loadMaterias();
   }
 
-  loadMaterias(): void {
-    this.http.get<{ id: number; nombre: string }[]>('http://cecyte.test/api/Materias').subscribe((materias) => {
-      this.materias = materias;
-    });
+  // Cargar lista de estudiantes
+  loadEstudiantes(): void {
+    this.http
+      .get<Usuarios[]>('http://cecyte.test/api/Usuarios')
+      .subscribe((data) => {
+        this.estudiantes = data.filter(
+          (usuario) => usuario.tipoUsuario === 'estudiante'
+        );
+      });
   }
 
-  onMateriaChange(): void {
-    if (this.selectedMateriaID !== null) {
-      this.loadChartData(this.selectedMateriaID);
+  // Cargar lista de materias
+  loadMaterias(): void {
+    this.http
+      .get<Materias[]>('http://cecyte.test/api/Materias')
+      .subscribe((data) => {
+        this.materias = data;
+      });
+  }
+
+  // Manejar cambio de selección de estudiante
+  onEstudianteChange(): void {
+    if (this.selectedEstudianteID !== null) {
+      this.loadChartData(this.selectedEstudianteID);
     }
   }
 
-  loadChartData(materiaID: number): void {
-    this.http.get<Calificaciones[]>('http://cecyte.test/api/Calificaciones').subscribe((calificaciones) => {
-      const calificacionesFiltradas = calificaciones.filter((cal) => cal.materiaID === materiaID);
+  // Cargar calificaciones del estudiante seleccionado
+  loadChartData(estudianteID: number): void {
+    this.http
+      .get<Calificaciones[]>('http://cecyte.test/api/Calificaciones')
+      .subscribe((calificaciones) => {
+        const calificacionesEstudiante = calificaciones.filter(
+          (cal) => cal.estudianteID === estudianteID
+        );
 
-      this.http.get<Estudiantes[]>('http://cecyte.test/api/Estudiantes').subscribe((estudiantes) => {
-        this.http.get<Usuarios[]>('http://cecyte.test/api/Usuarios').subscribe((usuarios) => {
-          const datos = calificacionesFiltradas.map((cal) => {
-            const estudiante = estudiantes.find((est) => est.id === cal.estudianteID);
-            const usuario = usuarios.find((user) => user.id === estudiante?.usuarioID);
-
-            return {
-              nombreCompleto: `${usuario?.nombre} ${usuario?.apellidoPaterno} ${usuario?.apellidoMaterno}`,
-              matricula: estudiante?.matricula,
-              calificacion: cal.calificacion,
-            };
-          });
-
-          const labels = datos.map((dato) => `${dato.nombreCompleto} (${dato.matricula})`);
-          const calificaciones = datos.map((dato) => dato.calificacion);
-
-          this.createChart(labels, calificaciones);
+        // Relacionar calificaciones con el nombre de la materia
+        const labels = calificacionesEstudiante.map((cal) => {
+          const materia = this.materias.find((m) => m.id === cal.materiaID);
+          return materia ? materia.nombre : 'Materia desconocida';
         });
+
+        const data = calificacionesEstudiante.map((cal) => cal.calificacion);
+
+        this.createChart(labels, data);
       });
-    });
   }
 
+  // Crear la gráfica
   createChart(labels: string[], data: number[]): void {
     if (this.chart) {
-      this.chart.destroy(); // Destruir la gráfica existente antes de crear una nueva
+      this.chart.destroy();
     }
   
-    // Filtrar datos para aprobados y reprobados
-    const dataAprobados = data.map((cal) => (cal >= 6 ? cal : null)); // Aprobados
-    const dataReprobados = data.map((cal) => (cal < 6 ? cal : null)); // Reprobados
+    const dataAprobados = data.map((cal) => (cal >= 6 ? cal : null));
+    const dataReprobados = data.map((cal) => (cal < 6 ? cal : null));
   
     this.chart = new Chart('myChart', {
       type: 'bar',
@@ -90,40 +97,40 @@ export class GraficaComponent implements OnInit {
           {
             label: 'Aprobados',
             data: dataAprobados,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color para aprobados
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1,
+            barPercentage: 1,        // Ocupar todo el espacio en la barra
+            categoryPercentage: 0.9,   // Eliminar espacios entre categorías
           },
           {
             label: 'Reprobados',
             data: dataReprobados,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)', // Color para reprobados
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
+            barPercentage: 1,
+            categoryPercentage: 0.9,
           },
         ],
       },
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            display: true,
-            position: 'top',
-          },
+          legend: { display: true, position: 'top' },
           tooltip: {
             callbacks: {
               label: (context) => {
-                return `${context.dataset.label}: ${context.raw}`;
+                const value = context.raw as number;
+                return `${context.dataset.label}: ${value.toFixed(2)}`;
               },
             },
           },
         },
         scales: {
           x: {
-            stacked: true, // Apilar las barras horizontalmente
-            grid: {
-              display: false,
-            },
+            grid: { display: false },
+            ticks: { autoSkip: false }, // Mostrar todas las etiquetas
           },
           y: {
             beginAtZero: true,
@@ -133,6 +140,4 @@ export class GraficaComponent implements OnInit {
       },
     });
   }
-  
-  
 }

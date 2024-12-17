@@ -73,3 +73,7 @@ h1, strong {
   border-radius: 1px;
   width: 150px;
 }
+
+::ng-deep .mdc-text-field.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #ffa528 !important;
+}

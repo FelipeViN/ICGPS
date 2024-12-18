@@ -74,7 +74,7 @@ export class TablaEstudiantesComponent implements OnInit {
 
   loadEstudiantes(): void {
     this.http
-      .get<Usuarios[]>('http://cecyte.test/api/Usuarios')
+      .get<Usuarios[]>('http://127.0.0.1:8000/api/Usuarios')
       .subscribe((usuarios) => {
         const estudiantes = usuarios.filter(
           (usuario) =>
@@ -82,7 +82,7 @@ export class TablaEstudiantesComponent implements OnInit {
         );
 
         this.http
-          .get<Estudiantes[]>('http://cecyte.test/api/Estudiantes')
+          .get<Estudiantes[]>('http://127.0.0.1:8000/api/Estudiantes')
           .subscribe((estudiantesData) => {
             const estudiantesCompletos: UsuarioEstudiante[] = estudiantes.map(
               (est) => {
@@ -186,7 +186,7 @@ export class DialogOverviewExampleDialog {
       };
 
       this.http
-        .put(`http://cecyte.test/api/Usuarios/${this.data.id}`, updatedData)
+        .put(`http://127.0.0.1:8000/api/Usuarios/${this.data.id}`, updatedData)
         .subscribe({
           next: () => {
             alert('Datos actualizados con éxito');
@@ -469,7 +469,7 @@ export class DialogOverviewExampleDialog {
           // Realizamos la solicitud PUT para actualizar los datos del usuario
           this.http
             .put<Usuarios>(
-              `http://cecyte.test/api/Usuarios/${this.data.usuarioID}`,
+              `http://127.0.0.1:8000/api/Usuarios/${this.data.usuarioID}`,
               usuario
             )
             .subscribe({
@@ -530,7 +530,7 @@ export class DialogOverviewExampleDialog {
 
     this.http
       .put<Estudiantes>(
-        `http://cecyte.test/api/Estudiantes/${this.data.estudianteId}`,
+        `http://127.0.0.1:8000/api/Estudiantes/${this.data.estudianteId}`,
         estudiante
       )
       .subscribe({
@@ -554,7 +554,7 @@ export class DialogOverviewExampleDialog {
 
     this.http
       .put<Profesores>(
-        `http://cecyte.test/api/Profesores/${this.data.profesorId}`,
+        `http://127.0.0.1:8000/api/Profesores/${this.data.profesorId}`,
         profesor
       )
       .subscribe({
@@ -578,7 +578,7 @@ export class DialogOverviewExampleDialog {
 
     this.http
       .put<Administrativos>(
-        `http://cecyte.test/api/Administrativos/${this.data.administrativoId}`,
+        `http://127.0.0.1:8000/api/Administrativos/${this.data.administrativoId}`,
         administrativo
       )
       .subscribe({

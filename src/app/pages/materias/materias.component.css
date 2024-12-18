@@ -129,7 +129,7 @@
 }
 
 .add-button {
-  background-color: #007bff;
+  background-color: #ffa528;
   color: white;
   border: none;
   padding: 10px;
@@ -140,7 +140,7 @@
 }
 
 .add-button:hover {
-  background-color: #0056b3;
+  background-color: #d27b00;
 }
 
 /* Barra de paginación */
@@ -206,7 +206,7 @@ mat-paginator .mat-mdc-paginator-page-size {
 }
 
 .submit-button {
-  background-color: #007bff;
+  background-color: #ffa528;
   color: white;
   border: none;
   padding: 10px;
@@ -292,12 +292,12 @@ mat-paginator .mat-mdc-paginator-page-size {
 
 /* Botón de modificar */
 .button-group button:nth-child(1) {
-  background-color: #007bff; /* Azul para modificar */
+  background-color: #ffa528; /* Azul para modificar */
   color: #fff;
 }
 
 .button-group button:nth-child(1):hover {
-  background-color: #0056b3;
+  background-color: #ffa528;
 }
 
 /* Botón de eliminar */

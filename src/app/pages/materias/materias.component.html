@@ -8,29 +8,22 @@
   <div class="content-container">
     <!-- Barra de botones para cambiar entre materias y horario -->
     <div class="materias-header">
-      <button 
-          [class.active]="true">
-          📘 Materias
-      </button>
+      <button [class.active]="true">📘 Materias</button>
     </div>
 
     <!-- Filtro de búsqueda -->
     <div class="filter-container">
-      <input
-        type="text"
-        placeholder="Buscar materia..."
-        [(ngModel)]="filtro"
-        (input)="buscarMateria()"
-        class="search-box"
-      />
+      <input type="text" placeholder="Buscar materia..." [(ngModel)]="filtro" (input)="buscarMateria()"
+        class="search-box" />
     </div>
 
     <!-- Vista de Materias -->
-    <div *ngIf="true" class="materias-container">
+    <div *ngIf="materias.length > 0" class="materias-container">
       <div class="materias-grid">
         <div *ngFor="let materia of paginatedMaterias" class="materia-card" (click)="abrirDetalleMateria(materia)">
           <div class="materia-icon">
-            <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de materia" class="materia-icono" />
+            <img src="https://cdn-icons-png.flaticon.com/512/5188/5188807.png" alt="Icono de materia"
+              class="materia-icono" />
           </div>
           <div class="materia-info">
             <h3 class="materia-titulo">{{ materia.nombre }}</h3>
@@ -42,17 +35,20 @@
       </div>
     </div>
 
-    <!-- Modal para más información de la materia -->
+    <!-- Modal para detalles de la materia -->
     <div class="modal-overlay" *ngIf="modalDetalleAbierto">
       <div class="modal-content">
         <h2>Detalles de la Materia</h2>
         <p><strong>Nombre:</strong> {{ materiaSeleccionada?.nombre }}</p>
-        <p><strong>Profesor:</strong> {{ materiaSeleccionada?.clave }}</p>
+        <p><strong>Clave:</strong> {{ materiaSeleccionada?.clave }}</p>
         <p><strong>Semestre:</strong> {{ materiaSeleccionada?.semestre }}</p>
-        <p><strong>Creditos:</strong> {{ materiaSeleccionada?.creditos }}</p>
+        <p><strong>Créditos:</strong> {{ materiaSeleccionada?.creditos }}</p>
+        <p><strong>Descripción:</strong> {{ materiaSeleccionada?.descripcion }}</p>
         <div class="button-group">
-          <button *ngIf="materiaSeleccionada" (click)="this['abrirModalEditar'](materiaSeleccionada)">Modificar</button>
-          <button (click)="eliminarMateria()">Eliminar</button>
+          <button *ngIf="materiaSeleccionada" (click)="abrirModalEditar(materiaSeleccionada)">
+            Modificar
+          </button>
+          <button (click)="eliminarMateria()">Dar de Baja</button>
           <button (click)="asignarHorario()">Asignar Horario</button>
         </div>
         <button class="cancel-button" (click)="cerrarModalDetalle()">Cerrar</button>
@@ -64,46 +60,62 @@
       <button class="add-button" (click)="abrirModal()">➕ Agregar Materia</button>
     </div>
 
-    <!-- Modal para agregar materia -->
-<!-- Modal para agregar materia -->
-<div class="modal-overlay" *ngIf="modalAbierto">
-  <div class="modal-content">
-    <h2>{{ nuevaMateria.id ? 'Editar Materia' : 'Agregar Nueva Materia' }}</h2>
-    <form (ngSubmit)="this['guardarMateria']()">
-      <label>
-        Nombre de la materia:
-        <input type="text" [(ngModel)]="nuevaMateria.nombre" name="nombre" required>
-      </label>
-      <label>
-        Clave de la materia:
-        <input type="text" [(ngModel)]="nuevaMateria.clave" name="clave" required>
-      </label>
-      <label>
-        Semestre:
-        <input type="number" [(ngModel)]="nuevaMateria.semestre" name="semestre" min="1" max="8" required>
-      </label>
-      <label>
-        Créditos:
-        <input type="number" [(ngModel)]="nuevaMateria.creditos" name="creditos" min="1" max="10" required>
-      </label>
+    <!-- Modal para agregar/editar materia -->
+    <div class="modal-overlay" *ngIf="modalAbierto">
+      <div class="modal-content">
+        <h2>{{ modoEdicion ? 'Editar Materia' : 'Agregar Nueva Materia' }}</h2>
+        <form (ngSubmit)="guardarMateria()">
+          <!-- Campo Clave -->
+          <label>
+            Clave de la materia:
+            <input type="text" [(ngModel)]="nuevaMateria.clave" name="clave"
+              (ngModelChange)="!modoEdicion && buscarMateriaPorClave()" [disabled]="modoEdicion" required />
+          </label>
 
-      <button type="submit" class="submit-button">
-        {{ nuevaMateria.id ? 'Actualizar' : 'Agregar' }}
-      </button>
-      <button type="button" class="cancel-button" (click)="cerrarModal()">Cancelar</button>
-    </form>
-  </div>
-</div>
+          <!-- Campo Nombre -->
+          <label>
+            Nombre de la materia:
+            <input type="text" [(ngModel)]="nuevaMateria.nombre" name="nombre" [disabled]="!modoEdicion" required />
+          </label>
 
+          <!-- Campo Semestre -->
+          <label>
+            Semestre:
+            <select [(ngModel)]="nuevaMateria.semestre" name="semestre" [disabled]="!modoEdicion && !nuevaMateria.clave"
+             
+              required
+              >
+              <option *ngFor="let semestre of [1, 2, 3, 4, 5, 6]" [value]="semestre">
+                {{ semestre }}
+              </option>
+            </select>
+          </label>
 
-    <div style="margin-bottom: 8px;"></div>
+          <!-- Campo Créditos -->
+          <label>
+            Créditos:
+            <input type="number" [(ngModel)]="nuevaMateria.creditos" name="creditos" [disabled]="!modoEdicion"
+              required />
+          </label>
+
+          <!-- Campo Descripción -->
+          <label>
+            Descripción:
+            <textarea [(ngModel)]="nuevaMateria.descripcion" name="descripcion" [disabled]="!modoEdicion"
+              required></textarea>
+          </label>
+
+          <!-- Botón Actualizar/Agregar -->
+          <button type="submit" class="submit-button">
+            {{ modoEdicion ? 'Actualizar' : 'Agregar' }}
+          </button>
+          <button type="button" class="cancel-button" (click)="cerrarModal()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+    <br><br>
     <!-- Barra de paginación -->
-    <mat-paginator
-  [length]="materias.length"
-  [pageSize]="itemsPerPage"
-  [pageSizeOptions]="[4, 8, 12]"
-  aria-label="Seleccione la página"
-  (page)="updatePaginatedMaterias()">
-</mat-paginator>
+    <mat-paginator [length]="materias.length" [pageSize]="itemsPerPage" [pageSizeOptions]="[4, 8, 12]"
+      aria-label="Seleccione la página" (page)="updatePaginatedMaterias()"></mat-paginator>
   </div>
 </div>

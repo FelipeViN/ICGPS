@@ -1,23 +1,14 @@
 <div>
   <mat-form-field appearance="fill">
-    <mat-label>Seleccionar Estudiante</mat-label>
-    <mat-select
-      [(value)]="selectedEstudianteID"
-      (selectionChange)="onEstudianteChange()"
-    >
-      <mat-option *ngFor="let estudiante of estudiantes" [value]="estudiante.id">
-        {{ estudiante.nombre }} {{ estudiante.apellidoPaterno }} {{ estudiante.apellidoMaterno }}
+    <mat-label>Seleccionar Grupo</mat-label>
+    <mat-select [(value)]="selectedGrupoId" (selectionChange)="cargarGraficaPorGrupo()">
+      <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">
+        {{ grupo.nombre }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
-<!-- Gráfica -->
-<div style="width: 80%; margin: 0 auto; margin-top: 20px">
+<div style="width: 60%; margin: auto; margin-top: 20px;">
   <canvas id="myChart"></canvas>
 </div>
-
-<!-- Componente Reporte -->
-<app-reportePDF [estudianteId]="selectedEstudianteID ?? 0"></app-reportePDF>
-
-

@@ -1,30 +1,35 @@
-<!-- Contenedor del reporte -->
-<div id="reporte" style="font-family: Arial, sans-serif; margin: 20px;">
-  <h3>Informe del Estudiante</h3>
-  <p><strong>Nombre:</strong> {{ estudiante?.nombre }} {{ estudiante?.apellidoPaterno }} {{ estudiante?.apellidoMaterno }}</p>
-  <p><strong>Email:</strong> {{ estudiante?.email }}</p>
-
-  <!-- Tabla de Calificaciones -->
-  <h4>Calificaciones Finales</h4>
-  <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; text-align: center; margin-top: 10px;">
-    <thead>
-      <tr>
-        <th>Materia</th>
-        <th>Calificación Final</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let calificacion of calificaciones">
-        <td>{{ calificacion.materia }}</td>
-        <td>{{ calificacion.calificacion }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div>
+  <mat-form-field appearance="fill">
+    <mat-label>Seleccionar Grupo</mat-label>
+    <mat-select [(value)]="selectedGrupoId" (selectionChange)="cargarEstudiantesPorGrupo()">
+      <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">
+        {{ grupo.nombre }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
-<!-- Botón para generar PDF -->
-<div style="text-align: center; margin-top: 20px;">
-  <button (click)="generarPDF()" style="padding: 10px; background-color: #ffa528; color: white; border: none; cursor: pointer;">
-    Generar Reporte PDF
-  </button>
+<div *ngIf="estudiantes.length > 0">
+  <mat-form-field appearance="fill">
+    <mat-label>Seleccionar Alumno</mat-label>
+    <mat-select [(value)]="selectedEstudianteId" (selectionChange)="cargarCalificaciones()">
+      <mat-option *ngFor="let estudiante of estudiantes" [value]="estudiante.id">
+        {{ estudiante.nombre }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div *ngIf="calificaciones.length > 0">
+  <h4>Calificaciones</h4>
+  <table>
+    <tr>
+      <th>Materia</th>
+      <th>Calificación Final</th>
+    </tr>
+    <tr *ngFor="let cal of calificaciones">
+      <td>{{ cal.materia }}</td>
+      <td>{{ cal.evaluacion_final }}</td>
+    </tr>
+  </table>
 </div>

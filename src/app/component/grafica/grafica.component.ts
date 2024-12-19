@@ -1,116 +1,68 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { HttpClient } from '@angular/common/http';
-import { Calificaciones } from '../../models/calificaciones/calificaciones.model';
-import { Usuarios } from '../../models/usuarios/usuarios.model';
+import { CalificacionService } from '../../services/calificacion.service';
+import { GruposService } from '../../services/grupos.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { Materias } from '../../models/materias/materias.model';
-import { ReportePDFComponent } from "../reporte/reportePDF.component";
+import { ReportePDFComponent } from '../reporte/reportePDF.component';
 
 @Component({
   selector: 'app-grafica',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatOptionModule, ReportePDFComponent],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatOptionModule],
   templateUrl: './grafica.component.html',
   styleUrl: './grafica.component.css',
 })
 export class GraficaComponent implements OnInit {
   chart: any;
-  estudiantes: Usuarios[] = [];
-  materias: Materias[] = [];
-  selectedEstudianteID: number | null = null;
+  grupos: any[] = [];
+  selectedGrupoId: number | null = null;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private calificacionService: CalificacionService,
+    private gruposService: GruposService
+  ) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    this.loadEstudiantes();
-    this.loadMaterias();
+    this.cargarGrupos();
   }
 
-  // Cargar lista de estudiantes
-  loadEstudiantes(): void {
-    this.http
-      .get<Usuarios[]>('http://cecyte.test/api/Usuarios')
-      .subscribe((data) => {
-        this.estudiantes = data.filter(
-          (usuario) => usuario.tipoUsuario === 'estudiante'
-        );
-      });
+  cargarGrupos(): void {
+    this.gruposService.getGrupos().subscribe((data) => {
+      this.grupos = data;
+    });
   }
 
-  // Cargar lista de materias
-  loadMaterias(): void {
-    this.http
-      .get<Materias[]>('http://cecyte.test/api/Materias')
-      .subscribe((data) => {
-        this.materias = data;
-      });
+  cargarGraficaPorGrupo(): void {
+    if (!this.selectedGrupoId) return;
+
+    this.calificacionService.getCalificaciones().subscribe((calificaciones) => {
+      const calificacionesGrupo = calificaciones.filter(
+        (cal) => cal.grupo_id === this.selectedGrupoId
+      );
+
+      const aprobados = calificacionesGrupo.filter((cal) => cal.evaluacion_final >= 6).length;
+      const reprobados = calificacionesGrupo.filter((cal) => cal.evaluacion_final < 6).length;
+
+      this.crearGrafica(aprobados, reprobados);
+    });
   }
 
-  // Manejar cambio de selección de estudiante
-  onEstudianteChange(): void {
-    if (this.selectedEstudianteID !== null) {
-      this.loadChartData(this.selectedEstudianteID);
-    }
-  }
+  crearGrafica(aprobados: number, reprobados: number): void {
+    if (this.chart) this.chart.destroy();
 
-  // Cargar calificaciones del estudiante seleccionado
-  loadChartData(estudianteID: number): void {
-    this.http
-      .get<Calificaciones[]>('http://cecyte.test/api/Calificaciones')
-      .subscribe((calificaciones) => {
-        const calificacionesEstudiante = calificaciones.filter(
-          (cal) => cal.estudianteID === estudianteID
-        );
-
-        // Relacionar calificaciones con el nombre de la materia
-        const labels = calificacionesEstudiante.map((cal) => {
-          const materia = this.materias.find((m) => m.id === cal.materiaID);
-          return materia ? materia.nombre : 'Materia desconocida';
-        });
-
-        const data = calificacionesEstudiante.map((cal) => cal.calificacion);
-
-        this.createChart(labels, data);
-      });
-  }
-
-  // Crear la gráfica
-  createChart(labels: string[], data: number[]): void {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-  
-    const dataAprobados = data.map((cal) => (cal >= 6 ? cal : null));
-    const dataReprobados = data.map((cal) => (cal < 6 ? cal : null));
-  
     this.chart = new Chart('myChart', {
-      type: 'bar',
+      type: 'pie',
       data: {
-        labels: labels,
+        labels: ['Aprobados', 'No Aprobados'],
         datasets: [
           {
-            label: 'Aprobados',
-            data: dataAprobados,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-            barPercentage: 1,        // Ocupar todo el espacio en la barra
-            categoryPercentage: 0.9,   // Eliminar espacios entre categorías
-          },
-          {
-            label: 'Reprobados',
-            data: dataReprobados,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1,
-            barPercentage: 1,
-            categoryPercentage: 0.9,
+            data: [aprobados, reprobados],
+            backgroundColor: ['#4caf50', '#f44336'],
           },
         ],
       },
@@ -118,24 +70,6 @@ export class GraficaComponent implements OnInit {
         responsive: true,
         plugins: {
           legend: { display: true, position: 'top' },
-          tooltip: {
-            callbacks: {
-              label: (context) => {
-                const value = context.raw as number;
-                return `${context.dataset.label}: ${value.toFixed(2)}`;
-              },
-            },
-          },
-        },
-        scales: {
-          x: {
-            grid: { display: false },
-            ticks: { autoSkip: false }, // Mostrar todas las etiquetas
-          },
-          y: {
-            beginAtZero: true,
-            max: 10,
-          },
         },
       },
     });

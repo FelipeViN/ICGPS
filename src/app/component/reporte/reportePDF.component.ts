@@ -1,69 +1,56 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { GruposService } from '../../services/grupos.service';
+import { CalificacionService } from '../../services/calificacion.service';
 import { Usuarios } from '../../models/usuarios/usuarios.model';
-import { HttpClient } from '@angular/common/http';
-import { Calificaciones } from '../../models/calificaciones/calificaciones.model';
-import { Materias } from '../../models/materias/materias.model';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-reportePDF',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatFormFieldModule, MatLabel, MatOptionModule, MatSelectModule],
   templateUrl: './reportePDF.component.html',
   styleUrls: ['./reportePDF.component.css'],
 })
-export class ReportePDFComponent {
-  @Input() estudianteId!: number;
-  estudiante: Usuarios | null = null;
-  calificaciones: { materia: string; calificacion: number }[] = [];
+export class ReportePDFComponent implements OnInit {
+  grupos: any[] = [];
+  estudiantes: Usuarios[] = [];
+  selectedGrupoId: number | null = null;
+  selectedEstudianteId: number | null = null;
+  calificaciones: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private gruposService: GruposService,
+    private calificacionService: CalificacionService
+  ) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['estudianteId'] && this.estudianteId) {
-      this.cargarDatosEstudiante();
-      this.cargarCalificaciones();
-    }
+  ngOnInit(): void {
+    this.cargarGrupos();
   }
 
-  // Función para cargar los datos del estudiante
-  cargarDatosEstudiante(): void {
-    const url = `http://cecyte.test/api/Usuarios/${this.estudianteId}`;
-    this.http.get<Usuarios>(url).subscribe((data) => {
-      this.estudiante = data;
+  cargarGrupos(): void {
+    this.gruposService.getGrupos().subscribe((data) => {
+      this.grupos = data;
     });
   }
 
-  // Función para cargar calificaciones y materias
+  cargarEstudiantesPorGrupo(): void {
+    if (!this.selectedGrupoId) return;
+
+    this.gruposService.getEstudiantesPorGrupo(this.selectedGrupoId).subscribe((data) => {
+      this.estudiantes = data;
+    });
+  }
+
   cargarCalificaciones(): void {
-    this.http.get<Calificaciones[]>('http://cecyte.test/api/Calificaciones').subscribe((calificaciones) => {
-      const calificacionesEstudiante = calificaciones.filter(
-        (cal) => cal.estudianteID === this.estudianteId
+    if (!this.selectedEstudianteId) return;
+
+    this.calificacionService.getCalificaciones().subscribe((data) => {
+      this.calificaciones = data.filter(
+        (cal) => cal.estudiante_id === this.selectedEstudianteId
       );
-
-      this.http.get<Materias[]>('http://cecyte.test/api/Materias').subscribe((materias) => {
-        this.calificaciones = calificacionesEstudiante.map((cal) => {
-          const materia = materias.find((m) => m.id === cal.materiaID);
-          return { materia: materia ? materia.nombre : 'Desconocida', calificacion: cal.calificacion };
-        });
-      });
-    });
-  }
-
-  // Función para generar el PDF
-  generarPDF(): void {
-    const DATA: HTMLElement = document.getElementById('reporte') as HTMLElement;
-
-    html2canvas(DATA, { scale: 2 }).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save('reporte.pdf');
     });
   }
 }

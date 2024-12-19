@@ -9,7 +9,8 @@ import { ReportePDFComponent } from '../../component/reporte/reportePDF.componen
   imports: [
     ToolbarComponent,
     GraficaComponent,
-  ],
+    ReportePDFComponent
+],
   templateUrl: './reporte.component.html',
   styleUrl: './reporte.component.css'
 })

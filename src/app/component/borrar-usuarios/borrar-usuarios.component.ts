@@ -23,7 +23,7 @@ export class BorrarUsuariosComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const url = `http://cecyte.test/api/Usuarios/${id}`;
+        const url = `http://127.0.0.1:8000/api/Usuarios/${id}`;
         
         this.http.get<Usuarios>(url).subscribe(usuario => {
           const usuarioActualizado = {

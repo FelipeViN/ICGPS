@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap, map, switchMap} from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Grupos } from '../models/grupos/grupos.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GruposService {
-  private apiUrl = 'http://cecyte.test/api/Grupos';
-  private usuariosUrl = 'http://cecyte.test/api/Usuarios';
+  private apiUrl = 'http://127.0.0.1:8000/api/Grupos';
   
   // Configuración de headers
   private httpOptions = {
@@ -25,17 +24,6 @@ export class GruposService {
     return this.http.get<Grupos[]>(this.apiUrl).pipe(
       tap(response => console.log('Grupos obtenidos:', response)),
       catchError(this.handleError)
-    );
-  }
-
-  // Método para obtener la lista de usuarios
-  getUsuarios(): Observable<any[]> {
-    return this.http.get<any[]>(this.usuariosUrl).pipe(
-      tap((usuarios) => console.log('Usuarios obtenidos:', usuarios)),
-      catchError((error) => {
-        console.error('Error al obtener usuarios:', error);
-        return throwError(() => new Error('Error al obtener usuarios.'));
-      })
     );
   }
 
@@ -112,41 +100,5 @@ export class GruposService {
       }
       return message;
     }
-  }
-
-
-  // Método para obtener los estudiantes de un grupo
-  getEstudiantesPorGrupo(grupoId: number): Observable<any[]> {
-    // Primero obtenemos los estudiantes del grupo
-    return this.http.get<any[]>(`${this.apiUrl}/${grupoId}/Estudiantes`).pipe(
-      tap((estudiantes) => console.log('Estudiantes obtenidos:', estudiantes)),
-      // Luego obtenemos los usuarios
-      switchMap((estudiantes) => 
-        this.http.get<any[]>(this.usuariosUrl).pipe(
-          map((usuarios) => {
-            // Combina los estudiantes con los usuarios por 'usuarioID'
-            return estudiantes.map((estudiante) => {
-              const usuario = usuarios.find(
-                (user) => user.id === estudiante.usuarioID
-              );
-              return {
-                ...estudiante,
-                nombre: usuario ? `${usuario.nombre} ${usuario.apellidoPaterno} ${usuario.apellidoMaterno}` : 'Nombre no encontrado',
-                correo: usuario ? usuario.email : 'Correo no disponible',
-              };
-            });
-          }),
-          tap((estudiantesConDatos) => console.log('Estudiantes con datos completos:', estudiantesConDatos)),
-          catchError((error) => {
-            console.error('Error al obtener usuarios:', error);
-            return throwError(() => new Error('Error al obtener usuarios.'));
-          })
-        )
-      ),
-      catchError((error) => {
-        console.error('Error al obtener estudiantes:', error);
-        return throwError(() => new Error('Error al obtener estudiantes.'));
-      })
-    );
   }
 }

@@ -9,12 +9,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 interface Materia {
-  id?: number;
   clave: string,
   nombre: string;
   grupo: string;
   semestre: number;
   creditos: number;
+  descripcion: string;
+  visible?: boolean; // Nuevo campo para filtrar visibilidad
 }
 
 @Component({
@@ -44,7 +45,7 @@ export default class MateriasComponent implements AfterViewInit, OnInit {
   materias: Materia[] = []; // Array de materias
   paginatedMaterias: Materia[] = []; // Materias paginadas
   modalAbierto = false; // Modal de agregar materia
-  nuevaMateria: Materia = { nombre: '', grupo: '', semestre: 1, creditos: 3, clave:'' };
+  nuevaMateria: Materia = { nombre: '', grupo: '', semestre: 1, creditos: 3, clave:'', descripcion:'' };
   profesores: string[] = ['Profesor 1', 'Profesor 2', 'Profesor 3']; // Lista de profesores
   modalDetalleAbierto = false; // Modal de detalles
   materiaSeleccionada: Materia | null = null; // Materia seleccionada
@@ -65,7 +66,7 @@ export default class MateriasComponent implements AfterViewInit, OnInit {
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
-
+  modoEdicion: boolean = false; // Asegura el tipo
   // Obtener materias desde la API
   obtenerMaterias(): void {
     this.http.get<Materia[]>(this.apiUrl).subscribe(
@@ -100,9 +101,25 @@ export default class MateriasComponent implements AfterViewInit, OnInit {
 
   cerrarModal(): void {
     this.modalAbierto = false;
-    this.nuevaMateria = { nombre: '', grupo: '', semestre: 1, creditos: 3, clave:'' };
+    this.nuevaMateria = { nombre: '', grupo: '', semestre: 1, creditos: 3, clave:'', descripcion:'' };
   }
+  buscarMateriaPorClave(): void {
+    const clave = this.nuevaMateria.clave.trim().toLowerCase();
+    const materia = this.materias.find((m) => m.clave.toLowerCase() === clave);
 
+    if (materia) {
+      this.nuevaMateria = { ...materia };
+    } else {
+      this.nuevaMateria = {
+        clave: '',
+        nombre: '',
+        semestre: 1,
+        creditos: 3,
+        descripcion: '',
+        grupo:''
+      };
+    }
+  }
   agregarNuevaMateria(): void {
     this.http.post<Materia>(this.apiUrl, this.nuevaMateria).subscribe(
       (materia) => {
@@ -114,7 +131,32 @@ export default class MateriasComponent implements AfterViewInit, OnInit {
       (error) => console.error('Error al agregar materia:', error)
     );
   }
-
+  guardarMateria(): void {
+    if (this.nuevaMateria.clave) {
+      // Si existe, actualizar
+      this.http.put(`${this.apiUrl}/${this.nuevaMateria.clave}`, this.nuevaMateria).subscribe(
+        () => {
+          const index = this.materias.findIndex((m) => m.clave === this.nuevaMateria.clave);
+          if (index !== -1) {
+            this.materias[index] = { ...this.nuevaMateria };
+          }
+          this.updatePaginatedMaterias();
+          this.cerrarModal();
+        },
+        (error) => console.error('Error al actualizar materia:', error)
+      );
+    } else {
+      // Si no existe, crear una nueva
+      this.http.post<Materia>(this.apiUrl, this.nuevaMateria).subscribe(
+        (materia) => {
+          this.materias.push(materia);
+          this.updatePaginatedMaterias();
+          this.cerrarModal();
+        },
+        (error) => console.error('Error al agregar materia:', error)
+      );
+    }
+  }
   abrirDetalleMateria(materia: Materia): void {
     this.materiaSeleccionada = materia;
     this.modalDetalleAbierto = true;
@@ -134,9 +176,9 @@ export default class MateriasComponent implements AfterViewInit, OnInit {
 
   eliminarMateria(): void {
     if (this.materiaSeleccionada) {
-      this.http.delete(`${this.apiUrl}/${this.materiaSeleccionada.id}`).subscribe(
+      this.http.delete(`${this.apiUrl}/${this.materiaSeleccionada.clave}`).subscribe(
         () => {
-          this.materias = this.materias.filter(m => m.id !== this.materiaSeleccionada?.id);
+          this.materias = this.materias.filter(m => m.clave !== this.materiaSeleccionada?.clave);
           this.dataSource.data = this.materias;
           this.updatePaginatedMaterias();
           this.cerrarModalDetalle();
@@ -145,6 +187,15 @@ export default class MateriasComponent implements AfterViewInit, OnInit {
       );
     }
   }
+
+  abrirModalEditar(materia: Materia): void {
+    this.modoEdicion = true; // Activa el modo edición
+    this.modalAbierto = true;
+  
+    // Clona los datos de la materia para evitar modificar directamente la card
+    this.nuevaMateria = { ...materia };
+  }
+  
 
   asignarHorario(): void {
     if (this.materiaSeleccionada) {
